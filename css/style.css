@@ -1,0 +1,265 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+    font-size: 62.5%;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100vw;
+}
+
+body {
+    background-color: whitesmoke !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+@font-face {
+    font-family: roboto;
+    src: url('../assets/font/roboto.ttf');
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    filter: drop-shadow(15px 20px 4px rgb(0, 0, 0, 0.4)) !important;
+}
+
+.login-con {
+    border-radius: 0.5rem;
+    padding-top: 6rem;
+}
+
+.logo-con {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    margin-bottom: 8rem;
+}
+
+
+#visible-pass {
+    display: none;
+}
+#invisible-pass {
+    display: block;
+}
+
+.logo-con img {
+    position: absolute;
+    width: 15rem;
+    border: 5px solid white;
+    border-radius: 50%;
+
+}
+
+
+.login-title {
+    height: 2rem;
+}
+
+.img-con {
+    padding-top: 6rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.img-wrapper {
+    margin-top: -2rem;
+    position: relative;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.img-wrapper img {
+    position: absolute;
+    bottom: -5rem;
+    scale: 1.5 !important;
+}
+
+
+
+
+
+
+
+
+.accounts-hero .sidenav {
+    width: 0; 
+    height: 100vh;
+}
+
+
+.account-header .icons button {
+    position: relative;
+}
+
+.account-header .icons i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.accounts-con {
+    flex: 1;
+}
+
+.accout-table-con {
+    height: 79vh;
+    overflow-y: auto;
+}
+
+.accout-table-con::-webkit-scrollbar {
+    width: 0;
+}
+
+.accout-table-wrapper {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.accout-table-con table {
+    width: 100%;
+}
+
+.accout-table-con table th {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.accout-table-con table th {
+    text-align: center;
+    padding: 1.5rem 0;
+}
+.accout-table-con table td {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+
+
+
+table {
+    table-layout: fixed;
+    background-color: white;
+    border-radius: 0.7rem;
+}
+
+table tr th {
+    position: sticky;
+    top: 0;
+}
+
+th:first-child {
+    border-top-left-radius: 0.7rem;
+}
+
+th:last-child {
+    border-top-right-radius: 0.7rem;
+}
+
+tr:last-child td:first-child {
+    border-bottom-left-radius: 0.7rem !important;
+}
+
+tr:last-child td:last-child {
+    border-bottom-right-radius: 0.7rem !important;
+}
+
+
+
+#pop-up-trigger, #delete-pop-up-trigger {
+    display: none !important;
+}
+
+
+.bg-blue {
+    background-color: #0884E3 !important;
+}
+
+.bg-pink {
+    background-color: #EA4194 !important;
+}
+
+.bg-blue-50 {
+    background-color: #0884e326 !important;
+}
+
+.bg-cyan {
+    background-color: #06CEC8 !important;
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+.bg-grey {
+    background-color: #6c757d !important;
+}
+
+.bg-grey-50 {
+    background-color: #dcdcdc !important;
+}
+
+
+/* xs < 768  phones*/
+@media screen and (max-width: 767px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}   
+}
+
+/* sm - larger tablet */
+@media screen and (min-width: 768px) {
+    .accounts-hero .sidenav {
+        width: 20rem; 
+        padding: 0 2rem;
+    }
+
+    #open-nav-icon {
+        display: none;
+    }
+}
+
+/* md - small laptop */
+@media screen and (min-width: 992px) {
+    html {
+        font-size: 48% !important;
+    }
+
+    .login-con {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .login-con, .img-con {
+        height: 72vh;
+    }
+    
+}
+
+/* lg - large laptop*/ 
+@media screen and (min-width: 1200px) {
+    html {
+        font-size: 62.5% !important;
+    }
+
+    .login-con, .img-con {
+        height: 65vh;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .login-con, .img-con {
+        height: 58vh;
+    }
+}
