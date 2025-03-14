@@ -38,8 +38,7 @@ if(isset($_POST['btnsubmit'])) {
 
 								if (mysqli_stmt_execute($stmt)) {
 									header("location: equipment-management.php");
-
-
+									$_SESSION["equipment-added"] = $asset_number = $_POST['asset_number'];;
 								}
 								else {
 									echo "Error inserting equipment";
@@ -176,13 +175,12 @@ if(isset($_POST['btnsubmit'])) {
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Description</span>
-								
-								<textarea class="form-control" id="description" name="description" rows="4"></textarea>
+								<textarea class="form-control fs-4" id="description" name="description" rows="4"></textarea>
 							</div>
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Branch</span>
-								<select class="form-select fs-4" name="cmb_branch" id = "cmbtype" required>
+								<select class="form-select fs-4" name="cmb_branch" id = "cmb_branch" required>
 									<option value = "">Select Branch</option>
 									<option value = "Juan Sumulong (Legarda / Main)">Juan Sumulong (Legarda / Main)</option>
 									<option value = "Andres Bonifacio (Pasig)">Andres Bonifacio (Pasig)</option>
@@ -194,15 +192,10 @@ if(isset($_POST['btnsubmit'])) {
 									<option value = "School of Law (Pasay)">School of Law (Pasay)</option>
 								</select>
 							</div>
-							
-
-
-
-
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Department</span>
-								<select class="form-select fs-4" name="cmb_department" id = "cmbtype" required>
+								<select class="form-select fs-4" name="cmb_department" id = "cmb_department" required>
 									<option value = "">Select Department</option>
 									<option value = "College of Arts and Sciences">College of Arts and Sciences</option>
 									<option value = "College of Criminal Justice Education">College of Criminal Justice Education</option>

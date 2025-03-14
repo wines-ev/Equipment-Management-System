@@ -25,12 +25,15 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<p class="modal-title fs-1" id="exampleModalLabel">Acount 
+					<p class="modal-title fs-1" id="exampleModalLabel">Equipment
 						<?php 
-							if (isset($_SESSION["updated"])) {
+							if (isset($_SESSION["equipment-added"])) {
+								echo "added!";
+							}
+							else if (isset($_SESSION["equipment-updated"])) {
 								echo "updated!";
 							}
-							else if (isset($_SESSION["deleted"])) {
+							else if (isset($_SESSION["equipment-deleted"])) {
 								echo "deleted!";
 							}
 						?>
@@ -40,12 +43,16 @@
 				<div class="modal-body fs-4 my-4">
 					<p class="fs-4">
 						<?php 
-							if (isset($_SESSION["updated-account"])) {
-								echo "Account '" . $_SESSION['updated-account'] . "' was updated successfully.";
+							if (isset($_SESSION["equipment-added"])) {
+								echo "Asset #" . $_SESSION['equipment-added'] . " was added successfully.";
 								
 							}
-							else if (isset($_SESSION["deleted-account"])) {
-								echo "Account '" . $_SESSION['deleted-account'] . "' was deleted successfully.";
+							else if (isset($_SESSION["equipment-updated"])) {
+								echo "Asset #" . $_SESSION['equipment-updated'] . " was updated successfully.";
+								
+							}
+							else if (isset($_SESSION["equipment-deleted"])) {
+								echo "Asset #" . $_SESSION['equipment-deleted'] . " was deleted successfully.";
 							}
 
 							
@@ -72,7 +79,7 @@
 					<a href="equipment-management.php" type="button" class="btn-close fs-4" aria-label="Close"></a>
 				</div>
 				<div class="modal-body fs-4 my-4">
-					<p class="fs-4">Are you sure you want to delete '<span class="fw-bold" id="username-to-delete-placeholder"></span>' ?</p>
+					<p class="fs-4">Are you sure you want to delete '<span class="fw-bold">Asset #</span><span class="fw-bold" id="asset-to-delete-placeholder"></span>' ?</p>
 					<p class="fs-4">This action cannot be undone.</p>
 				</div>
 				<div class="modal-footer">
@@ -85,15 +92,17 @@
 
 	<?php
 
-		if (isset($_SESSION["updated"]) && isset($_SESSION["updated-account"])) {
+		if (isset($_SESSION["equipment-added"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["updated"]);
-			unset($_SESSION["updated-account"]);
+			unset($_SESSION["equipment-added"]);
 		}	
-		else if (isset($_SESSION["deleted"]) && isset($_SESSION["deleted-account"])) {
+		else if (isset($_SESSION["equipment-updated"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["deleted"]);
-			unset($_SESSION["deleted-account"]);
+			unset($_SESSION["equipment-updated"]);
+		}	
+		else if (isset($_SESSION["equipment-deleted"])) {
+			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
+			unset($_SESSION["equipment-deleted"]);
 		}	
 		
 	?>
@@ -272,13 +281,13 @@
 	
 	for (let btn of caution_triggers) {
 		btn.addEventListener('click', () => {
-			document.getElementById('username-to-delete-placeholder').innerHTML = btn.parentNode.parentNode.childNodes[0].innerHTML
+			document.getElementById('asset-to-delete-placeholder').innerHTML = btn.parentNode.parentNode.childNodes[0].innerHTML
 			document.getElementById('caution-pop-up-trigger').click();
 		});
 	}
 
 	function delete_user() {
-		window.location.href = "delete-account.php?username=" + document.getElementById('username-to-delete-placeholder').innerHTML;
+		window.location.href = "delete-equipment.php?asset_number=" + document.getElementById('asset-to-delete-placeholder').innerHTML;
 	}
 
 	const rows = document.getElementById("account-table").childNodes[1].childNodes;
