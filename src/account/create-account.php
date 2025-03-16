@@ -28,9 +28,8 @@ if(isset($_POST['btnsubmit']))
 
 
 					if (mysqli_stmt_execute($stmt)) {
+						$_SESSION["account-created"] = $_POST['txtusername'];
 						header("location: account-management.php");
-
-
 					}
 					else {
 						echo "Error inserting account";

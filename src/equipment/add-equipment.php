@@ -38,7 +38,7 @@ if(isset($_POST['btnsubmit'])) {
 
 								if (mysqli_stmt_execute($stmt)) {
 									header("location: equipment-management.php");
-									$_SESSION["equipment-added"] = $asset_number = $_POST['asset_number'];;
+									$_SESSION["equipment-added"] = $_POST['asset_number'];;
 								}
 								else {
 									echo "Error inserting equipment";
@@ -79,6 +79,13 @@ if(isset($_POST['btnsubmit'])) {
 	<script src="https://kit.fontawesome.com/acb62c1ffe.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+	<script>
+		if ( window.history.replaceState ) {
+			window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
+
 	<button type="button" id="pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
 		Launch error modal
 	</button>

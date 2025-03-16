@@ -5,37 +5,70 @@
 	
 
 	if (isset($_POST["btnsubmit"])) {
+		$sql = "SELECT * FROM equipment_tbl WHERE serial_number = ?";
 
-		$sql = "UPDATE equipment_tbl SET serial_number = ?, type = ?, manufacturer = ?, year_model = ?, description = ?, branch = ?, department = ?, status = ? WHERE asset_number = ?";
+		if($stmt = mysqli_prepare($link, $sql)) {
+			mysqli_stmt_bind_param($stmt, "s", $_POST['serial_number']);
+			if(mysqli_stmt_execute($stmt)) {
+				$result = mysqli_stmt_get_result($stmt);
+				$equipment = mysqli_fetch_array($result);
+				if(mysqli_num_rows($result) == 0 || (mysqli_num_rows($result) == 1 && $equipment["asset_number"] == $_GET["asset_number"])) {
+					$sql = "UPDATE equipment_tbl SET serial_number = ?, type = ?, manufacturer = ?, year_model = ?, description = ?, branch = ?, department = ?, status = ? WHERE asset_number = ?";
 
-		if ($stmt = mysqli_prepare($link, $sql)) {
-			mysqli_stmt_bind_param($stmt, "sssssssss", $_POST['serial_number'], $_POST['cmb_type'], $_POST['manufacturer'], $_POST['year_model'], $_POST['description'], $_POST['cmb_branch'], $_POST['cmb_department'], $_POST['rbstatus'], $_GET['asset_number']);
-
-			if (mysqli_stmt_execute($stmt)) {
-				$sql = "INSERT INTO logs_tbl (datelog, timelog, action, module, performedto, performedby) VALUE(?, ?, ?, ?, ?, ?)";
 					if ($stmt = mysqli_prepare($link, $sql)) {
-						$date = date("d/m/Y");
-						$time = date("h:i:sa");
-						$action = "update";
-						$module = "equipment-management";
-						$asset = "Asset #" . $_GET['asset_number'];
-						mysqli_stmt_bind_param($stmt, "ssssss", $date, $time, $action, $module, $asset, $_SESSION['username']);
-
+						mysqli_stmt_bind_param($stmt, "sssssssss", $_POST['serial_number'], $_POST['cmb_type'], $_POST['manufacturer'], $_POST['year_model'], $_POST['description'], $_POST['cmb_branch'], $_POST['cmb_department'], $_POST['rbstatus'], $_GET['asset_number']);
 
 						if (mysqli_stmt_execute($stmt)) {
-							echo "Equipment updated";
-							$_SESSION["equipment-updated"] = $_GET['asset_number'];
-							header("location: equipment-management.php");
-							exit();
+							$sql = "INSERT INTO logs_tbl (datelog, timelog, action, module, performedto, performedby) VALUE(?, ?, ?, ?, ?, ?)";
+								if ($stmt = mysqli_prepare($link, $sql)) {
+									$date = date("d/m/Y");
+									$time = date("h:i:sa");
+									$action = "update";
+									$module = "equipment-management";
+									$asset = "Asset #" . $_GET['asset_number'];
+									mysqli_stmt_bind_param($stmt, "ssssss", $date, $time, $action, $module, $asset, $_SESSION['username']);
+
+
+									if (mysqli_stmt_execute($stmt)) {
+										echo "Equipment updated";
+										$_SESSION["equipment-updated"] = $_GET['asset_number'];
+										header("location: equipment-management.php");
+										exit();
+									}
+								}
+								else {
+									echo "<font color='red'>Error on inserting logs.</font>";
+								}
 						}
 					}
 					else {
-						echo "<font color='red'>Error on inserting logs.</font>";
+						echo "<font color='red>Error on updating account.</font>";
 					}
+				}
+				else {
+					$_SESSION["serial_number_error"] = $_POST["serial_number"];
+					if (isset($_GET["asset_number"])) {
+						$sql = "SELECT * FROM equipment_tbl WHERE asset_number = ?";
+						if ($stmt = mysqli_prepare($link, $sql)) {
+							mysqli_stmt_bind_param($stmt, "s", $_GET["asset_number"]);
+			
+							if (mysqli_stmt_execute($stmt)) {
+								$result = mysqli_stmt_get_result($stmt);
+								$equipment = mysqli_fetch_array($result);
+							}
+						}
+					}
+					else {
+						echo "<font color='red'>Error on loading account data.</font>";
+					}
+				}
+			}
+			else {
+				echo "Error on SQL execute";
 			}
 		}
 		else {
-			echo "<font color='red>Error on updating account.</font>";
+			echo "Error on SQL prepape";
 		}
 	}
 	else {
@@ -54,7 +87,6 @@
 			echo "<font color='red'>Error on loading account data.</font>";
 		}
 	}
-
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +101,98 @@
 	<script src="https://kit.fontawesome.com/acb62c1ffe.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<script>
+	if ( window.history.replaceState ) {
+		window.history.replaceState( null, null, window.location.href );
+	}
+	</script>
+
+	<button type="button" id="pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		Launch error modal
+	</button>
+
+	<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title fs-1" id="exampleModalLabel">
+						Error!
+					</p>
+					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body fs-4 my-4">
+					<p class="fs-4">
+						<?php 
+							if (isset($_SESSION["asset_number_error"])) {
+								echo "Asset number '<span class='fw-bold'>" . $_SESSION["asset_number_error"] . "</span>' already in use.";
+							}
+							else if (isset($_SESSION["serial_number_error"])) {
+								echo "Serial number '<span class='fw-bold'>" . $_SESSION["serial_number_error"] . "</span>' already in use.";
+							}
+						?>
+					
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary fs-4 px-4" id="dismiss-modal" data-bs-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+
+	<?php
+		if (isset($_SESSION["serial_number_error"])) {
+			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
+			unset($_SESSION["serial_number_error"]);
+		}
+	?>
+
+	<button type="button" id="pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		Launch error modal
+	</button>
+
+	<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title fs-1" id="exampleModalLabel">
+						Error!
+					</p>
+					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body fs-4 my-4">
+					<p class="fs-4">
+						<?php 
+							if (isset($_SESSION["asset_number_error"])) {
+								echo "Asset number '<span class='fw-bold'>" . $_SESSION["asset_number_error"] . "</span>' already in use.";
+							}
+							else if (isset($_SESSION["serial_number_error"])) {
+								echo "Serial number '<span class='fw-bold'>" . $_SESSION["serial_number_error"] . "</span>' already in use.";
+							}
+						?>
+					
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary fs-4 px-4" id="dismiss-modal" data-bs-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	<?php
+		if (isset($_SESSION["asset_number_error"])) {
+			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
+			unset($_SESSION["asset_number_error"]);
+		}
+		if (isset($_SESSION["serial_number_error"])) {
+			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
+			unset($_SESSION["serial_number_error"]);
+		}
+	?>
+
+	
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
 			<?php include ("../../modules/sidenav.php") ?>
@@ -122,7 +246,7 @@
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Description</span>
-								<textarea class="form-control fs-4" id="description" name="description" rows="4" maxlength="200"><?php echo $equipment['description']; ?></textarea>
+								<textarea class="form-control fs-4" id="description" name="description" rows="3" maxlength="200"><?php echo $equipment['description']; ?></textarea>
 							</div>
 
 							<div class="input-group mb-3">

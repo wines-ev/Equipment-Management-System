@@ -28,10 +28,13 @@
 				<div class="modal-header">
 					<p class="modal-title fs-1" id="exampleModalLabel">Acount 
 						<?php 
-							if (isset($_SESSION["updated"])) {
+							if (isset($_SESSION["account-created"])) {
+								echo "created!";
+							}
+							else if (isset($_SESSION["account-updated"])) {
 								echo "updated!";
 							}
-							else if (isset($_SESSION["deleted"])) {
+							else if (isset($_SESSION["account-deleted"])) {
 								echo "deleted!";
 							}
 						?>
@@ -41,12 +44,15 @@
 				<div class="modal-body fs-4 my-4">
 					<p class="fs-4">
 						<?php 
-							if (isset($_SESSION["updated-account"])) {
-								echo "Account '" . $_SESSION['updated-account'] . "' was updated successfully.";
+							if (isset($_SESSION["account-created"])) {
+								echo "Account '" . $_SESSION['account-created'] . "' was created successfully.";
+							}
+							else if (isset($_SESSION["account-updated"])) {
+								echo "Account '" . $_SESSION['account-updated'] . "' was updated successfully.";
 								
 							}
-							else if (isset($_SESSION["deleted-account"])) {
-								echo "Account '" . $_SESSION['deleted-account'] . "' was deleted successfully.";
+							else if (isset($_SESSION["account-deleted"])) {
+								echo "Account '" . $_SESSION['account-deleted'] . "' was deleted successfully.";
 							}
 
 							
@@ -85,16 +91,18 @@
 	</div>	
 
 	<?php
+		if (isset($_SESSION["account-created"])) {
+			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
+			unset($_SESSION["account-created"]);
+		}
 
-		if (isset($_SESSION["updated"]) && isset($_SESSION["updated-account"])) {
+		else if (isset($_SESSION["account-updated"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["updated"]);
-			unset($_SESSION["updated-account"]);
+			unset($_SESSION["account-updated"]);
 		}	
-		else if (isset($_SESSION["deleted"]) && isset($_SESSION["deleted-account"])) {
+		else if (isset($_SESSION["account-deleted"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["deleted"]);
-			unset($_SESSION["deleted-account"]);
+			unset($_SESSION["account-deleted"]);
 		}	
 		
 	?>

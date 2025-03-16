@@ -6,6 +6,7 @@
 
 	if (isset($_POST["btnsubmit"])) {
 
+
 		$sql = "UPDATE user_tbl SET password = ?, user_type = ?, status = ? WHERE username = ?";
 
 		if ($stmt = mysqli_prepare($link, $sql)) {
@@ -23,8 +24,7 @@
 
 						if (mysqli_stmt_execute($stmt)) {
 							echo "User account updated";
-							$_SESSION["updated"] = true;
-							$_SESSION["updated-account"] = $_GET['username'];
+							$_SESSION["account-updated"] = $_GET['username'];
 							header("location: account-management.php");
 							exit();
 						}

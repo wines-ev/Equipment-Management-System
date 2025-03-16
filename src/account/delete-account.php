@@ -23,8 +23,7 @@
 
 						if (mysqli_stmt_execute($stmt)) {
 							echo "User account deleted";
-							$_SESSION["deleted"] = true;
-							$_SESSION["deleted-account"] = $_GET['username'];
+							$_SESSION["account-deleted"] = $_GET['username'];
 							header("location: account-management.php");
 							exit();
 						}
