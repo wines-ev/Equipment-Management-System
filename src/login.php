@@ -123,5 +123,6 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 			txtpassword.type = "text";
 		}
 	})
+	console.log(screen.width);
 </script>
 </html>

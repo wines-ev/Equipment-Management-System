@@ -1,6 +1,8 @@
 <?php
 require_once "../config.php";
 include ("../session-checker.php");
+
+
 if(isset($_POST['btnsubmit']))
 {
 	$sql = "SELECT * FROM user_tbl WHERE username = ?";

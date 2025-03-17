@@ -260,6 +260,6 @@ tr:last-child td:last-child {
 
 @media screen and (min-width: 1400px) {
     .login-con, .img-con {
-        height: 58vh;
+        height: 73vh;
     }
 }

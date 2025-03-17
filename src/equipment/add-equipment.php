@@ -46,6 +46,7 @@ if(isset($_POST['btnsubmit'])) {
 							}
 						}
 						else {
+							
 							$_SESSION["serial_number_error"] = $_POST["serial_number"];
 						}
 					}
@@ -54,6 +55,7 @@ if(isset($_POST['btnsubmit'])) {
 			else
 			{	
 				$_SESSION["asset_number_error"] = $_POST["asset_number"];
+				
 			}
 		}
 	}
@@ -119,17 +121,6 @@ if(isset($_POST['btnsubmit'])) {
 		</div>
 	</div>	
 
-	<?php
-		if (isset($_SESSION["asset_number_error"])) {
-			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["asset_number_error"]);
-		}
-		if (isset($_SESSION["serial_number_error"])) {
-			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["serial_number_error"]);
-		}
-	?>
-
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
 			<?php include ("../../modules/sidenav.php") ?>
@@ -147,17 +138,17 @@ if(isset($_POST['btnsubmit'])) {
 						<form acion = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "POST">
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Asset number</span>
-								<input class="form-control fs-4" type="text" name="asset_number" required>
+								<input class="form-control fs-4" type="text" name="asset_number" id="asset_number" required>
 							</div>
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Serial number</span>
-								<input class="form-control fs-4" type="text" name="serial_number" required>
+								<input class="form-control fs-4" type="text" name="serial_number" id="serial_number" required>
 							</div>
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Type</span>
-								<select class="form-select fs-4" name="cmb_type" id="cmbtype" required>
+								<select class="form-select fs-4" name="cmb_type" id="cmbtype" id= "cmbtype" required>
 									<option value = "">Select Equipment Type</option>
 									<option value = "Monitor">Monitor</option>
 									<option value = "CPU">CPU</option>
@@ -172,17 +163,17 @@ if(isset($_POST['btnsubmit'])) {
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Manufacturer</span>
-								<input class="form-control fs-4" type="text" name="manufacturer" required>
+								<input class="form-control fs-4" type="text" name="manufacturer" id="manufacturer" required>
 							</div>
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Year Model</span>
-								<input class="form-control fs-4" type="number" min="1000" max="9999" name="year_model" required>
+								<input class="form-control fs-4" type="number" min="1000" max="9999" name="year_model" id="year_model" required>
 							</div>
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Description</span>
-								<textarea class="form-control fs-4" id="description" name="description" rows="4"></textarea>
+								<textarea class="form-control fs-4" id="description" name="description" rows="4" id="description"></textarea>
 							</div>
 
 							<div class="input-group mb-3">
@@ -240,9 +231,27 @@ if(isset($_POST['btnsubmit'])) {
 	</div>
 
 	
-
 	
 </body>
+
+<?php 
+ if (isset($_SESSION["asset_number_error"])) {
+	echo "<script>document.getElementById('asset_number').value = '" . $_POST['asset_number'] . "'</script>";
+ }
+
+?>
+
+<?php
+	if (isset($_SESSION["asset_number_error"])) {
+		echo "<script>document.getElementById('pop-up-trigger').click();</script>";
+		unset($_SESSION["asset_number_error"]);
+	}
+	if (isset($_SESSION["serial_number_error"])) {
+		echo "<script>document.getElementById('pop-up-trigger').click();</script>";
+		unset($_SESSION["serial_number_error"]);
+	}
+?>
+
 
 <script>
 	const open_nav_icon = document.getElementById("open-nav-icon");
