@@ -47,20 +47,6 @@
 				}
 				else {
 					$_SESSION["serial_number_error"] = $_POST["serial_number"];
-					if (isset($_GET["asset_number"])) {
-						$sql = "SELECT * FROM equipment_tbl WHERE asset_number = ?";
-						if ($stmt = mysqli_prepare($link, $sql)) {
-							mysqli_stmt_bind_param($stmt, "s", $_GET["asset_number"]);
-			
-							if (mysqli_stmt_execute($stmt)) {
-								$result = mysqli_stmt_get_result($stmt);
-								$equipment = mysqli_fetch_array($result);
-							}
-						}
-					}
-					else {
-						echo "<font color='red'>Error on loading account data.</font>";
-					}
 				}
 			}
 			else {
@@ -325,6 +311,21 @@
 		</div>
 	</div>
 </body>
+
+<?php 
+ if (isset($_SESSION["serial_number_error"])) {
+	echo "<script>document.getElementById('asset_number').value = '" . $_POST['asset_number'] . "'</script>";
+	echo "<script>document.getElementById('serial_number').value = '" . $_POST['serial_number'] . "'</script>";
+	echo "<script>document.getElementById('cmb_type').value = '" . $_POST['cmb_type'] . "'</script>";
+	echo "<script>document.getElementById('manufacturer').value = '" . $_POST['manufacturer'] . "'</script>";
+	echo "<script>document.getElementById('year_model').value = '" . $_POST['year_model'] . "'</script>";
+	echo "<script>document.getElementById('description').value = '" . $_POST['description'] . "'</script>";
+	echo "<script>document.getElementById('cmb_branch').value = '" . $_POST['cmb_branch'] . "'</script>";
+	echo "<script>document.getElementById('cmb_department').value = '" . $_POST['cmb_department'] . "'</script>";
+ }
+
+?>
+
 <script>
 	const open_nav_icon = document.getElementById("open-nav-icon");
 	const close_nav_icon = document.getElementById("close-nav-icon");

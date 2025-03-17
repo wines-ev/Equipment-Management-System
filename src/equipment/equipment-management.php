@@ -145,7 +145,7 @@
 						<?php
 
 							if(!isset($_POST["txtsearch"])) {
-								$sql = "SELECT * FROM equipment_tbl";
+								$sql = "SELECT * FROM equipment_tbl ORDER BY date_created ASC";
 
 								if($stmt = mysqli_prepare($link, $sql)) {
 									if (mysqli_stmt_execute($stmt)) {
@@ -156,7 +156,7 @@
 							}
 							else {
                                 // Asset Number, Serial Number, Type, and Department.  
-								$sql = "SELECT * FROM equipment_tbl WHERE asset_number LIKE ? OR serial_number LIKE ? OR type LIKE ? OR department LIKE ? ORDER BY asset_number";
+								$sql = "SELECT * FROM equipment_tbl WHERE asset_number LIKE ? OR serial_number LIKE ? OR type LIKE ? OR department LIKE ? ORDER BY date_created ASC";
 
 								if($stmt = mysqli_prepare($link, $sql)) {
 									$text_value = "%" . $_POST["txtsearch"] . "%";

@@ -82,11 +82,7 @@ if(isset($_POST['btnsubmit'])) {
 </head>
 <body>
 
-	<script>
-		if ( window.history.replaceState ) {
-			window.history.replaceState( null, null, window.location.href );
-		}
-	</script>
+
 
 	<button type="button" id="pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
 		Launch error modal
@@ -148,7 +144,7 @@ if(isset($_POST['btnsubmit'])) {
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Type</span>
-								<select class="form-select fs-4" name="cmb_type" id="cmbtype" id= "cmbtype" required>
+								<select class="form-select fs-4" name="cmb_type" id= "cmb_type" required>
 									<option value = "">Select Equipment Type</option>
 									<option value = "Monitor">Monitor</option>
 									<option value = "CPU">CPU</option>
@@ -235,8 +231,15 @@ if(isset($_POST['btnsubmit'])) {
 </body>
 
 <?php 
- if (isset($_SESSION["asset_number_error"])) {
+ if (isset($_SESSION["asset_number_error"]) || isset($_SESSION["serial_number_error"])) {
 	echo "<script>document.getElementById('asset_number').value = '" . $_POST['asset_number'] . "'</script>";
+	echo "<script>document.getElementById('serial_number').value = '" . $_POST['serial_number'] . "'</script>";
+	echo "<script>document.getElementById('cmb_type').value = '" . $_POST['cmb_type'] . "'</script>";
+	echo "<script>document.getElementById('manufacturer').value = '" . $_POST['manufacturer'] . "'</script>";
+	echo "<script>document.getElementById('year_model').value = '" . $_POST['year_model'] . "'</script>";
+	echo "<script>document.getElementById('description').value = '" . $_POST['description'] . "'</script>";
+	echo "<script>document.getElementById('cmb_branch').value = '" . $_POST['cmb_branch'] . "'</script>";
+	echo "<script>document.getElementById('cmb_department').value = '" . $_POST['cmb_department'] . "'</script>";
  }
 
 ?>
