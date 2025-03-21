@@ -127,7 +127,7 @@
 			<div class="accounts-con">
 				<?php include ("../../modules/header.php") ?>
 				
-				<div class="d-flex justify-content-between align-items-center mx-5 mb-4 pb-2">
+				<div class="d-flex justify-content-between mx-5 mb-4 pb-2">
 					<p class="fs-4 mb-0">Accounts / All accounts</p>
 					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "POST" class="d-flex gap-3">
 						<div class="input-group flex-fill" style="width: 30rem;">

@@ -176,7 +176,9 @@ tr:last-child td:last-child {
     border-bottom-right-radius: 0.7rem !important;
 }
 
-
+select {
+    white-space:pre-wrap !important;
+}
 
 #pop-up-trigger, #delete-pop-up-trigger {
     display: none !important;
@@ -261,5 +263,11 @@ tr:last-child td:last-child {
 @media screen and (min-width: 1400px) {
     .login-con, .img-con {
         height: 73vh;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .login-con, .img-con {
+        height: 56vh;
     }
 }

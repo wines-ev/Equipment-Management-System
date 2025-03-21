@@ -1,34 +1,41 @@
 <?php
 if (isset($_POST['btnlogin'])) {
-require_once "config.php";
+	require_once "config.php";
 
-$sql = "SELECT * FROM user_tbl WHERE username = ? AND password = ? AND status = 'ACTIVE'";
+	$sql = "SELECT * FROM user_tbl WHERE username = ? AND password = ? AND status = 'ACTIVE'";
 
-if ($stmt = mysqli_prepare($link, $sql)) {
-	mysqli_stmt_bind_param($stmt, "ss", $_POST['txtusername'], $_POST['txtpassword']);
+	if ($stmt = mysqli_prepare($link, $sql)) {
 
-	if(mysqli_stmt_execute($stmt)) {
-		$result = mysqli_stmt_get_result($stmt);
+		mysqli_stmt_bind_param($stmt, "ss", $_POST['txtusername'], $_POST['txtpassword']);
 
-		if (mysqli_num_rows($result) > 0) {
-			$account = mysqli_fetch_array($result, MYSQLI_ASSOC);
+		if(mysqli_stmt_execute($stmt)) {
+			$result = mysqli_stmt_get_result($stmt);
 
-			session_start();
+			if (mysqli_num_rows($result) > 0) {
+				$account = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-			$_SESSION['username'] = $account['username'];
-			$_SESSION['user_type'] = $account['user_type'];
-			header("location: equipment/equipment-management.php");
-		}
-		else {
-			echo "<font color = 'red'>Incorrect login detail or account is inactive.</font>";
+				session_start();
+
+				$_SESSION['username'] = $account['username'];
+				$_SESSION['user_type'] = $account['user_type'];
+				
+				if ($account['user_type'] == "USER") {
+					header("location: ticket/ticket-management.php");
+				}
+				else {
+					header("location: equipment/equipment-management.php");
+				}
+				
+			} else {
+				$_SESSION["incorrect_login"] = $_POST['txtusername'];
 			}
 		}
-	}
-	else {
+	} else {
 		echo "<font color = 'red'> Error on the login statement.</font>";
 	}
 } 
- ?>
+
+?>
 
 
 <!DOCTYPE html>
@@ -44,6 +51,13 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 </head>
 <body class="login-body ">
 	<div class="mask"></div>
+
+	<script>
+		if ( window.history.replaceState ) {
+			window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
+
 
 	<div class="container">
 		<div class="hero row justify-content-center bg-transparent">
@@ -63,12 +77,16 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 						</button>
 					</div>
 					
-					<div class="d-flex justify-content-between mb-5">
+					<div class="d-flex justify-content-between mb-1">
 						<div class="d-flex">
 							<input type="checkbox" class="me-2" name="remember" id="remember" value="false">
 							<label for="remember" class="fs-4">Remember me</label>
 						</div>
 						<a href="#" class="fs-4">Forgot Password?</a>
+					</div>
+
+					<div>
+						<p class="fs-4 mb-3 text-danger" id="incorrect-login-text"></p>
 					</div>
 
 					<input type = "submit" class="btn bg-blue text-light fs-5 py-3 fw-bold" name = "btnlogin" value = "LOGIN">
@@ -105,6 +123,16 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 		</div>
 	</div>
 </body>
+
+<?php
+	if(isset($_SESSION["incorrect_login"])) {
+		echo "<script>document.getElementById('txtusername').value = '" . $_SESSION["incorrect_login"] . "'</script>";
+		echo "<script>document.getElementById('incorrect-login-text').innerHTML = 'Incorrect username or password'</script>";
+		unset($_SESSION["incorrect_login"]);
+	}
+
+?>
+
 <script>
 	const toggle_hide_pass = document.getElementById("toggle-hide-pass");
 	const visible_pass = document.getElementById("visible-pass");

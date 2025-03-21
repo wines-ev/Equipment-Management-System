@@ -30,7 +30,7 @@ if(isset($_POST['btnsubmit'])) {
 								$department = $_POST['cmb_department'];
 								$status = "WORKING";
 								$createdby = $_SESSION['username'];
-								$datecreated = date("m/d/Y");
+								$datecreated = date("Y-m-d H:i:s");
 
 								mysqli_stmt_bind_param($stmt, "sssssssssss", $asset_number, $serial_number, $type, $manufacturer, 
 								$year_model, $description, $branch, $department, $status, $createdby, $datecreated);
@@ -38,29 +38,24 @@ if(isset($_POST['btnsubmit'])) {
 
 								if (mysqli_stmt_execute($stmt)) {
 									header("location: equipment-management.php");
-									$_SESSION["equipment-added"] = $_POST['asset_number'];;
-								}
-								else {
+									$_SESSION["equipment-added"] = $_POST['asset_number'];
+								} else {
 									echo "Error inserting equipment";
 								}
 							}
-						}
-						else {
+						} else {
 							
 							$_SESSION["serial_number_error"] = $_POST["serial_number"];
 						}
 					}
 				}
-			}
-			else
-			{	
+			}  else {	
 				$_SESSION["asset_number_error"] = $_POST["asset_number"];
 				
 			}
+
 		}
-	}
-	else
-	{
+	} else {
 		echo "<font color = 'red'>ERROR on SELECT statement</font>";
 	}
 }

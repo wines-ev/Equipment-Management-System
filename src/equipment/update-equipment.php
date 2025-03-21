@@ -87,10 +87,10 @@
 	<script src="https://kit.fontawesome.com/acb62c1ffe.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<script>
-	if ( window.history.replaceState ) {
-		window.history.replaceState( null, null, window.location.href );
-	}
+	<script>
+		if ( window.history.replaceState ) {
+			window.history.replaceState( null, null, window.location.href );
+		}
 	</script>
 
 	<button type="button" id="pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">

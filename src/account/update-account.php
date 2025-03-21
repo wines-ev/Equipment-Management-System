@@ -15,7 +15,7 @@
 			if (mysqli_stmt_execute($stmt)) {
 				$sql = "INSERT INTO logs_tbl (datelog, timelog, action, module, performedto, performedby) VALUE(?, ?, ?, ?, ?, ?)";
 					if ($stmt = mysqli_prepare($link, $sql)) {
-						$date = date("d/m/Y");
+						$date = date("m/d/Y");
 						$time = date("h:i:sa");
 						$action = "update";
 						$module = "account-management";
@@ -102,6 +102,7 @@
 									<option value="ADMINISTRATOR" <?php if ($account['user_type'] == "ADMINISTRATOR") {echo "selected";} ?>>Administrator</option>
 									<option value="TECHNICAL" <?php if ($account['user_type'] == "TECHNICAL") {echo "selected";} ?>>Technical</option>
 									<option value="STAFF" <?php if ($account['user_type'] == "STAFF") {echo "selected";} ?>>Staff</option>
+									<option value="USER" <?php if ($account['user_type'] == "USER") {echo "selected";} ?>>User</option>
 								</select>
 							</div>
 
