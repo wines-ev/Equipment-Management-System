@@ -139,11 +139,20 @@ a {
 
 .accout-table-con table th {
     text-align: center;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
 }
 .accout-table-con table td {
     text-align: center;
     padding: 1rem 0;
+}
+
+
+.rotate-0 {
+    transform: rotate(0deg) !important; 
+}
+
+.rotate-180 {
+    transform: rotate(180deg) !important; 
 }
 
 

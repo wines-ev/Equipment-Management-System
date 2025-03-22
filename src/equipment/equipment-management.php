@@ -189,16 +189,16 @@
 
 								while($row = mysqli_fetch_array($result)) {
 									echo "<tr id='data-row' >";
-									echo "<td class='fs-4'>" . $row['asset_number'] . "</td>";
-									echo "<td class='fs-4'>" . $row['serial_number'] . "</td>";
-									echo "<td class='fs-4'>" . $row['type'] . "</td>";
-									echo "<td class='fs-4'>" . $row['branch'] . "</td>";
-									echo "<td class='fs-4'>" . $row['status'] . "</td>";
-									echo "<td class='fs-4'>" . $row['created_by'] . "</td>";
+									echo "<td class='fs-5'>" . $row['asset_number'] . "</td>";
+									echo "<td class='fs-5'>" . $row['serial_number'] . "</td>";
+									echo "<td class='fs-5'>" . $row['type'] . "</td>";
+									echo "<td class='fs-5'>" . $row['branch'] . "</td>";
+									echo "<td class='fs-5'>" . $row['status'] . "</td>";
+									echo "<td class='fs-5'>" . $row['created_by'] . "</td>";
 									echo "<td>";
-									echo "<a href='update-equipment.php?asset_number=" . urlencode($row['asset_number']) . "' class='btn bg-blue text-light fs-4 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
+									echo "<a href='update-equipment.php?asset_number=" . urlencode($row['asset_number']) . "' class='btn bg-blue text-light fs-5 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
 									echo "
-										<button class='caution-modal-btn btn btn-danger text-light fs-4'>
+										<button class='caution-modal-btn btn btn-danger text-light fs-5'>
 											<i class='fa-solid fa-trash-can'></i>
 										</button>";
 									echo "</td>";	

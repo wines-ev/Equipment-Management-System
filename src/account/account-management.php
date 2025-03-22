@@ -186,15 +186,15 @@
 
 								while($row = mysqli_fetch_array($result)) {
 									echo "<tr id='data-row' >";
-									echo "<td class='fs-4'>" . $row['username'] . "</td>";
-									echo "<td class='fs-4'>" . $row['user_type'] . "</td>";
-									echo "<td class='fs-4'>" . $row['status'] . "</td>";
-									echo "<td class='fs-4'>" . $row['created_by'] . "</td>";
-									echo "<td class='fs-4'>" . $row['date_created'] . "</td>";
+									echo "<td class='fs-5'>" . $row['username'] . "</td>";
+									echo "<td class='fs-5'>" . $row['user_type'] . "</td>";
+									echo "<td class='fs-5'>" . $row['status'] . "</td>";
+									echo "<td class='fs-5'>" . $row['created_by'] . "</td>";
+									echo "<td class='fs-5'>" . $row['date_created'] . "</td>";
 									echo "<td>";
-									echo "<a href='update-account.php?username=" . urlencode($row['username']) . "' class='btn bg-blue text-light fs-4 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
+									echo "<a href='update-account.php?username=" . urlencode($row['username']) . "' class='btn bg-blue text-light fs-5 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
 									echo "
-										<button class='caution-modal-btn btn btn-danger text-light fs-4'>
+										<button class='caution-modal-btn btn btn-danger text-light fs-5'>
 											<i class='fa-solid fa-trash-can'></i>
 										</button>";
 									echo "</td>";

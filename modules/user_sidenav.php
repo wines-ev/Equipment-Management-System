@@ -10,20 +10,29 @@
                     <span id="close-nav-icon" class="text-light fs-2" style="cursor:pointer" onclick="closeNav()">&#9776;</span>
                 </div>
 
-                <a class="d-flex align-items-center mb-4" href="#">
+                <a class="d-flex align-items-center" href="dashboard.php">
                     <i class="fa-solid fa-chart-simple fs-2 text-light text-center" style="width: 5rem;"></i>
                     <p class="navtab-text text-light fs-4 mb-0">Dashboard</p>
                 </a>
 
-                <a class="d-flex align-items-center mb-4" href="../ticket/ticket-management.php">
-                    <i class="fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
-                    <p class="navtab-text text-light fs-4 mb-0">
-                        Tickets
-                    </p>
-                </a>
+                <div class="d-flex align-items-center mt-4">
+                    <a class="d-flex align-items-center" href="../ticket/ticket-management.php">
+                        <i class="fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
+                        <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Tickets</p>
+                    </a>
+                    <i class="fa-solid fa-caret-up text-light fs-4 px-3" id="collapse-ticket-trigger" data-bs-toggle="collapse" href="#collapse-ticket" role="button" aria-expanded="false" aria-controls="collapse-ticket"></i>
+                </div>
+
+                <div class="collapse show" id="collapse-ticket">
+                    <div class="ms-5 ps-2 d-flex flex-column">
+                        <a class="text-light fs-5 py-1 ps-4" href="ticket-management.php">All tickets</a>
+                        <a class="text-light fs-5 py-1 ps-4" href = "create-ticket.php">Create new ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="ticket-management.php?update">Update a ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="ticket-management.php?delete">Delete a ticket</a>
+                    </div>
+                </div>
 
 
-                
             </div>
             <div>
                 <a class="d-flex align-items-center" style="bottom: 2rem;" href="../logout.php">
@@ -34,3 +43,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    Array.from(document.getElementsByClassName("fa-caret-up")).forEach(element => {
+        element.addEventListener('click', (e) => {
+            e.target.style.transition = "transform 0.5s";
+            
+
+            if (Array.from(e.target.classList).includes("collapsed")) {
+                e.target.classList.remove("rotate-0");
+                e.target.classList.add("rotate-180");
+            }
+            else {
+                e.target.classList.remove("rotate-180");
+                e.target.classList.add("rotate-0");
+            }
+
+        })
+    });
+</script>

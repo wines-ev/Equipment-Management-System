@@ -93,67 +93,75 @@
 
 
 
-    <button type="button" id="details-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#detailsModal">
+    <button type="button" id="details-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#details-modal">
 		Launch details modal
 	</button>
 
-    <div class="modal modal-dialog-scrollable" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal modal-lg" id="details-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
+			<div class="modal-content" onmouse>
 				<div class="modal-header">
 					<p class="modal-title fs-1" id="exampleModalLabel">Ticket #<span id="details_ticket_num"></span> </p>
-					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+					<a href="ticket-management.php" type="button" class="btn-close fs-4" aria-label="Close"></a>
 				</div>
-				<div class="modal-body fs-4 my-4">
-					<div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Problem</span>
-                        <input class="form-control fs-4" id="txt_problem" disabled> </input>
-                    </div>
+				<div class="modal-body fs-4 px-3">
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Details</span>
-                        <input class="form-control fs-4" id="txt_details" disabled> </input>
-                    </div>
+					<div class="d-flex gap-3">
+						<div class="flex-fill">
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Problem</span>
+								<input class="form-control fs-4" id="txt_problem" disabled> </input>
+							</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Status</span>
-                        <input class="form-control fs-4" id="txt_status" disabled> </input>
-                    </div>
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Details</span>
+								<input class="form-control fs-4" id="txt_details" disabled> </input>
+							</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Created By</span>
-                        <input class="form-control fs-4" id="txt_created_by" disabled> </input>
-                    </div>
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Status</span>
+								<input class="form-control fs-4" id="txt_status" disabled> </input>
+							</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Created</span>
-                        <input class="form-control fs-4" id="txt_date_created" disabled> </input>
-                    </div>
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Created By</span>
+								<input class="form-control fs-4" id="txt_created_by" disabled> </input>
+							</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Assigned To</span>
-                        <input class="form-control fs-4" id="txt_assigned_to" disabled> </input>
-                    </div>
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Created</span>
+								<input class="form-control fs-4" id="txt_date_created" disabled> </input>
+							</div>
+						</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Assigned</span>
-                        <input class="form-control fs-4" id="txt_date_assigned" disabled> </input>
-                    </div>
+						<div class="flex-fill">
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Assigned To</span>
+								<input class="form-control fs-4" id="txt_assigned_to" disabled> </input>
+							</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Completed</span>
-                        <input class="form-control fs-4" id="txt_date_completed" disabled> </input>
-                    </div>
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Assigned</span>
+								<input class="form-control fs-4" id="txt_date_assigned" disabled> </input>
+							</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Approved By</span>
-                        <input class="form-control fs-4" id="txt_approved_by" disabled> </input>
-                    </div>
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Completed</span>
+								<input class="form-control fs-4" id="txt_date_completed" disabled> </input>
+							</div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Approved</span>
-                        <input class="form-control fs-4" id="txt_date_approved" disabled> </input>
-                    </div>
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Approved By</span>
+								<input class="form-control fs-4" id="txt_approved_by" disabled> </input>
+							</div>
+
+							<div class="input-group mb-3">
+								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Approved</span>
+								<input class="form-control fs-4" id="txt_date_approved" disabled> </input>
+							</div>
+
+						</div>
+					</div>
                     
 				</div>
 				<div class="modal-footer">
@@ -293,19 +301,19 @@
 
 								while($row = mysqli_fetch_array($result)) {
 									echo "<tr id='data-row' >";
-									echo "<td class='fs-4'>" . $row['ticket_number'] . "</td>";
-									echo "<td class='fs-4'>" . $row['problem'] . "</td>";
+									echo "<td class='fs-5'>" . $row['ticket_number'] . "</td>";
+									echo "<td class='fs-5'>" . $row['problem'] . "</td>";
                                     $date =  explode(' ', $row['date_created']);
-									echo "<td class='fs-4'>" . $date[0] . "</td>";
-									echo "<td class='fs-4'>" . $row['status'] . "</td>";
+									echo "<td class='fs-5'>" . $date[0] . "</td>";
+									echo "<td class='fs-5'>" . $row['status'] . "</td>";
 									echo "<td>";
-                                    echo "<button title='Details' class='details-modal-btn btn btn-success text-light fs-4 me-3'>
+                                    echo "<button title='Details' class='details-modal-btn btn btn-success text-light fs-5 me-3'>
 											<i class='fa-solid fa-eye'></i>
 										</button>";
-									echo "<a title='Edit' href='update-ticket.php?ticket_number=" . urlencode($row['ticket_number']) . "' class='btn bg-blue text-light fs-4 me-2'>
+									echo "<a title='Edit' href='update-ticket.php?ticket_number=" . urlencode($row['ticket_number']) . "' class='btn bg-blue text-light fs-5 me-2'>
                                             <i class='fa-solid fa-pen-to-square'></i>
                                         </a> ";
-									echo " <button title='Delete' class='caution-modal-btn btn btn-danger text-light fs-4'>
+									echo " <button title='Delete' class='caution-modal-btn btn btn-danger text-light fs-5'>
 											<i class='fa-solid fa-trash-can'></i>
 										</button>";
 									echo "</td>";	
@@ -329,6 +337,8 @@
 </body>
 
 <script>
+
+
 
 
 
@@ -417,6 +427,13 @@
 			rows[i].classList.add("bg-blue-50");
 		}
 	}
+
+	const details_modal = document.getElementById("details-modal").addEventListener('click', (e) => {
+		if (Array.from(e.target.classList).includes("modal")) {
+			window.location.href = "ticket-management.php";
+		}
+		
+	})
 	
 </script>
 </html>
