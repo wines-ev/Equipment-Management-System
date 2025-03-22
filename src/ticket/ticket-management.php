@@ -303,7 +303,9 @@
 									echo "<tr id='data-row' >";
 									echo "<td class='fs-5'>" . $row['ticket_number'] . "</td>";
 									echo "<td class='fs-5'>" . $row['problem'] . "</td>";
+
                                     $date =  explode(' ', $row['date_created']);
+
 									echo "<td class='fs-5'>" . $date[0] . "</td>";
 									echo "<td class='fs-5'>" . $row['status'] . "</td>";
 									echo "<td>";
