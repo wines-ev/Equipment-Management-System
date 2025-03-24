@@ -22,8 +22,8 @@
                         $time = date("h:i:sa");
                         $action = "update";
                         $module = "ticket-management";
-                        $asset = "Ticket #" . $_GET['ticket_number'];
-                        mysqli_stmt_bind_param($stmt, "ssssss", $date, $time, $action, $module, $asset, $_SESSION['username']);
+                        $performed_to = "Ticket #" . $_GET['ticket_number'];
+                        mysqli_stmt_bind_param($stmt, "ssssss", $date, $time, $action, $module, $performed_to, $_SESSION['username']);
 
 
                         if (mysqli_stmt_execute($stmt)) {
@@ -67,7 +67,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Update Account</title>
+	<title>Update Ticket</title>
 	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="../../plugins/bs/bootstrap.min.css">
 	<script src="../../plugins/bs/bootstrap.min.js"></script>
@@ -191,29 +191,11 @@
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Problem</span>
 								<select class="form-select fs-4" name="cmb_problem" id="cmb_problem" required>
-                                    <option value = "Hardware" <?php if ($ticket['problem'] == "Hardware") {echo "selected";} ?>>Hardware
-                                        <div>
-                                            <?php if ($ticket['problem'] == "Hardware" && !empty($ticket['details'])) {
-                                                echo " - " . $ticket['details'];
-                                            } ?>
-                                        </div>
-                                    </option>
+                                    <option value = "Hardware" <?php if ($ticket['problem'] == "Hardware") {echo "selected";} ?>>Hardware</option>
                                     
 									
-									<option value = "Software" <?php if ($ticket['problem'] == "Software") {echo "selected";} ?>>Software
-                                            <div>
-                                                <?php if ($ticket['problem'] == "Software" && !empty($ticket['details'])) {
-                                                    echo " - " . $ticket['details'];
-                                                } ?>
-                                            </div>
-                                    </option>
-									<option value = "Connection" <?php if ($ticket['problem'] == "Connection") {echo "selected";} ?>>Connection
-                                            <div>
-                                                <?php if ($ticket['problem'] == "Connection" && !empty($ticket['details'])) {
-                                                    echo " - " . $ticket['details'];
-                                                } ?>
-                                            </div>
-                                    </option>
+									<option value = "Software" <?php if ($ticket['problem'] == "Software") {echo "selected";} ?>>Software</option>
+									<option value = "Connection" <?php if ($ticket['problem'] == "Connection") {echo "selected";} ?>>Connection</option>
 								</select>
 							</div>
 
@@ -221,13 +203,9 @@
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Details</span>
-								<textarea class="form-control fs-4" id="txt_details" name="txt_details" rows="3" maxlength="200"></textarea>
+								<textarea class="form-control fs-4" id="txt_details" name="txt_details" rows="3" maxlength="200"><?php echo $ticket['details']; ?></textarea>
 							</div>
-
-
-				
 							
-
 							<div class="d-flex mt-5 gap-3 justify-content-end">
 								<a class="btn bg-secondary text-light fs-4 px-5" href="ticket-management.php">Cancel</a>
 								<input class="btn bg-blue text-light fs-4 px-5" type="submit" name="btnsubmit" value="Submit">

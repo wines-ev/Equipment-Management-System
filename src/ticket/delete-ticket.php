@@ -17,7 +17,8 @@
 						$time = date("h:i:sa");
 						$action = "delete";
 						$module = "ticket-management";
-						mysqli_stmt_bind_param($stmt, "ssssss", $date, $time, $action, $module, $_GET['ticket_number'], $_SESSION['username']);
+						$performed_to = "Ticket #" . $_GET['ticket_number'];
+						mysqli_stmt_bind_param($stmt, "ssssss", $date, $time, $action, $module, $performed_to, $_SESSION['username']);
 
 
 						if (mysqli_stmt_execute($stmt)) {

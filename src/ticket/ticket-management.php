@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">		
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Equipment Management</title>
+	<title>Ticket Management</title>
 	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="../../plugins/bs/bootstrap.min.css">
 	<script src="../../plugins/bs/bootstrap.min.js"></script>
@@ -44,15 +44,15 @@
 					<p class="fs-4">
 						<?php 
 							if (isset($_SESSION["ticket-added"])) {
-								echo "Asset #" . $_SESSION['ticket-added'] . " was added successfully.";
+								echo "Ticket #" . $_SESSION['ticket-added'] . " was added successfully.";
 								
 							}
 							else if (isset($_SESSION["ticket-updated"])) {
-								echo "Asset #" . $_SESSION['ticket-updated'] . " was updated successfully.";
+								echo "Ticket #" . $_SESSION['ticket-updated'] . " was updated successfully.";
 								
 							}
 							else if (isset($_SESSION["ticket-deleted"])) {
-								echo "Asset #" . $_SESSION['ticket-deleted'] . " was deleted successfully.";
+								echo "Ticket #" . $_SESSION['ticket-deleted'] . " was deleted successfully.";
 							}
 
 							
