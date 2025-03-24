@@ -17,10 +17,10 @@
 
                 <div class="d-flex align-items-center mt-4">
                     <a class="d-flex align-items-center" href="../ticket/ticket-management.php">
-                        <i class="fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
+                        <i class="icon fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
                         <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Tickets</p>
                     </a>
-                    <i class="fa-solid fa-caret-up text-light fs-4 px-3" id="collapse-ticket-trigger" data-bs-toggle="collapse" href="#collapse-ticket" role="button" aria-expanded="false" aria-controls="collapse-ticket"></i>
+                    <i class="fa-solid navtab-text fa-caret-up text-light fs-4 px-3" id="collapse-ticket-trigger" data-bs-toggle="collapse" href="#collapse-ticket" role="button" aria-expanded="false" aria-controls="collapse-ticket"></i>
                 </div>
 
                 <div class="collapse show" id="collapse-ticket">

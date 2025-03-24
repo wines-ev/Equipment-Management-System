@@ -17,8 +17,8 @@
 
                 <div class="d-flex align-items-center mt-4">
                     <a class="d-flex align-items-center" href="../account/account-management.php">
-                        <i class="fa-solid fa-users fs-2 text-light text-center" style="width: 5rem;"></i>
-                        <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Accounts</p> 
+                        <i class="icon fa-solid fa-users fs-2 text-light text-center" id="account-icon" style="width: 5rem;"></i>
+                        <p class=" navtab-text text-light fs-4 mb-0" style="width: 9rem;">Accounts</p> 
                     </a>
                     <i class="fa-solid fa-caret-up text-light fs-4 px-3" id="collapse-account-trigger" data-bs-toggle="collapse" href="#collapse-account" role="button" aria-expanded="false" aria-controls="collapseAccount"></i>
                 </div>
@@ -35,7 +35,7 @@
 
                 <div class="d-flex align-items-center mt-4">
                     <a class="d-flex align-items-center" href="../equipment/equipment-management.php">
-                        <i class="fa-solid fa-computer fs-2 text-light text-center" style="width: 5rem;"></i>
+                        <i class="icon fa-solid fa-computer fs-2 text-light text-center" id="equipment-icon" style="width: 5rem;"></i>
                         <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Equipments</p>
                     </a>
                     <i class="fa-solid fa-caret-up text-light fs-4 px-3" id="collapse-equipment-trigger" data-bs-toggle="collapse" href="#collapse-equipment" role="button" aria-expanded="false" aria-controls="collapse-equipment"></i>

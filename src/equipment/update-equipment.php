@@ -81,10 +81,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Update Account</title>
-	<link rel="stylesheet" href="../../css/style.css">
+	
 	<link rel="stylesheet" href="../../plugins/bs/bootstrap.min.css">
 	<script src="../../plugins/bs/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/acb62c1ffe.js" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 	<script>
@@ -326,49 +328,5 @@
 
 ?>
 
-<script>
-	const open_nav_icon = document.getElementById("open-nav-icon");
-	const close_nav_icon = document.getElementById("close-nav-icon");
-	const sidenav_title = document.getElementById("sidenav_title");
-	const navtab_texts = document.getElementsByClassName("navtab-text");
-
-	function openNav() {
-		document.getElementById("sidenav").style.width = "20rem";
-		open_nav_icon.style.display = "none";
-		close_nav_icon.style.display = "block";
-		sidenav_title.style.display = "block";		
-
-		document.getElementById("sidenav").style.padding = "0 2rem";
-
-		for(let text of navtab_texts) {
-			text.style.display = "block";
-		}
-	}
-
-	function closeNav() {
-		if (screen.width > 767 && screen.width < 1280) {
-			document.getElementById("sidenav").style.width = "7rem";
-		}
-		else {
-			document.getElementById("sidenav").style.width = "0";
-			document.getElementById("sidenav").style.padding = "0";
-		}
-		
-		open_nav_icon.style.display = "block";
-		close_nav_icon.style.display = "none";
-		sidenav_title.style.display = "none";
-
-		for(let text of navtab_texts) {
-			text.style.display = "none";
-		}
-	}
-
-	const rows = document.getElementById("account-table").childNodes[0].childNodes;
-	
-	for (var i = 0; i < rows.length; i++) {
-		if (i%2 == 0) {
-			rows[i].classList.add("bg-blue-50");
-		}
-	}
-</script>
+<script src="../../js/script.js"></script>
 </html>

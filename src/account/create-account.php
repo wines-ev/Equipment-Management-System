@@ -57,10 +57,12 @@ if(isset($_POST['btnsubmit']))
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Create New Account</title>
-	<link rel="stylesheet" href="../../css/style.css">
+
 	<link rel="stylesheet" href="../../plugins/bs/bootstrap.min.css">
 	<script src="../../plugins/bs/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/acb62c1ffe.js" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 	<div class="container-fluid mx-0 px-0">
@@ -91,7 +93,7 @@ if(isset($_POST['btnsubmit']))
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Account Type</span>
 								<select class="form-select fs-4" name = "cmbtype" id = "cmbtype" required>
-									<option value = "">--Select Account Type--</option>
+									<option value = "">Select Account Type</option>
 									<option value = "ADMINISTRATOR">Administrator</option>
 									<option value = "TECHNICAL">Technical</option>
 									<option value = "STAFF">Staff</option>
@@ -110,48 +112,11 @@ if(isset($_POST['btnsubmit']))
 		</div>
 	</div>
 
-	
 
 	
 </body>
 
-<script>
-	const open_nav_icon = document.getElementById("open-nav-icon");
-	const close_nav_icon = document.getElementById("close-nav-icon");
-	const sidenav_title = document.getElementById("sidenav_title");
-	const navtab_texts = document.getElementsByClassName("navtab-text");
-
-	function openNav() {
-		document.getElementById("sidenav").style.width = "20rem";
-		open_nav_icon.style.display = "none";
-		close_nav_icon.style.display = "block";
-		sidenav_title.style.display = "block";		
-
-		document.getElementById("sidenav").style.padding = "0 2rem";
-
-		for(let text of navtab_texts) {
-			text.style.display = "block";
-		}
-	}
-
-	function closeNav() {
-		if (screen.width > 767) {
-			document.getElementById("sidenav").style.width = "7rem";
-		}
-		else {
-			document.getElementById("sidenav").style.width = "0";
-			document.getElementById("sidenav").style.padding = "0";
-		}
-		
-		open_nav_icon.style.display = "block";
-		close_nav_icon.style.display = "none";
-		sidenav_title.style.display = "none";
-
-		for(let text of navtab_texts) {
-			text.style.display = "none";
-		}
-	}
-</script>
+<script src="../../js/script.js"></script>
 </html>
 
 

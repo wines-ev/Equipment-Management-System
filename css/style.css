@@ -169,6 +169,11 @@ table tr th {
     top: 0;
 }
 
+.icon-fix {
+    padding-left: 2px;
+    text-align: start !important;
+}
+
 th:first-child {
     border-top-left-radius: 0.7rem;
 }
