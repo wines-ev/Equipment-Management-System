@@ -355,6 +355,12 @@
 													<i class='fa-solid fa-eye'></i>
 												</button>";
 											echo "<a title='Edit' href='update-ticket.php?ticket_number=" . urlencode($row['ticket_number']) . "' class='btn bg-blue text-light fs-5 me-2'>
+													<i class='fa-solid fa-pen'></i>
+												</a> ";
+												echo "<a title='Edit' href='update-ticket.php?ticket_number=" . urlencode($row['ticket_number']) . "' class='btn bg-blue text-light fs-5 me-2'>
+													<i class='fa-solid fa-pen-to-square'></i>
+												</a> ";
+											echo "<a title='Edit' href='update-ticket.php?ticket_number=" . urlencode($row['ticket_number']) . "' class='btn bg-blue text-light fs-5 me-2'>
 													<i class='fa-solid fa-pen-to-square'></i>
 												</a> ";
 											echo " <button title='Delete' id='caution-modal-btn' class=' btn btn-danger text-light fs-5'>

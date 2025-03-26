@@ -49,10 +49,10 @@
                         <a class="text-light fs-5 py-1 ps-4" href="../equipment/equipment-management.php?update">Update equipment</a>
                         <a class="text-light fs-5 py-1 ps-4" href="../equipment/equipment-management.php?delete">Delete equipment</a>
                     </div>
-                </div>
+                </div>  
 
                 <div class="d-flex align-items-center mt-4">
-                    <a class="d-flex align-items-center" href="../ticket-admin/ticket-management.php">
+                    <a class="d-flex align-items-center" href="../ticket/ticket-management-admin.php">
                         <i class="icon fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
                         <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Tickets</p>
                     </a>
@@ -61,10 +61,10 @@
 
                 <div class="collapse show" id="collapse-ticket">
                     <div class="ms-5 ps-2 d-flex flex-column">
-                        <a class="text-light fs-5 py-1 ps-4" href="../ticket-admin/ticket-management.php">All tickets</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../ticket-admin/create-ticket.php">Create new ticket</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../ticket-admin/ticket-management.php?update">Update a ticket</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../ticket-admin/ticket-management.php?delete">Delete a ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/ticket-management-admin.php">All tickets</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/create-ticket-admin.php">Create new ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/ticket-management-admin.php?update">Update a ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/ticket-management-admin.php?delete">Delete a ticket</a>
                     </div>
                 </div>
 

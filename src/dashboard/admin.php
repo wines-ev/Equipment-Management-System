@@ -76,7 +76,7 @@
                                     <p class="card-text fs-5">
                                         Track, organize, and manage your support tickets all in one place.
                                     </p>
-                                    <a href="../ticket/ticket-management.php" class="btn btn-primary fs-5 mt-3">Manage accounts</a>
+                                    <a href="../account/account-management.php" class="btn btn-primary fs-5 mt-3">Manage accounts</a>
                                 </div>
                             </div>
                             <div>
@@ -129,7 +129,7 @@
                                     <p class="card-text fs-5">
                                         Track, organize, and manage your support tickets all in one place.
                                     </p>
-                                    <a href="../ticket/ticket-management.php" class="btn btn-primary fs-5 mt-3">Manage Equipments</a>
+                                    <a href="../equipment/equipment-management.php" class="btn btn-primary fs-5 mt-3">Manage Equipments</a>
                                 </div>
                             </div>
                             <div>
@@ -179,7 +179,7 @@
                                     <p class="card-text fs-5">
                                         Track, organize, and manage your support tickets all in one place.
                                     </p>
-                                    <a href="../ticket/ticket-management.php" class="btn btn-primary fs-5 mt-3">Manage tickets</a>
+                                    <a href="../ticket/ticket-management-admin.php" class="btn btn-primary fs-5 mt-3">Manage tickets</a>
                                 </div>
                             </div>
                             <div>
