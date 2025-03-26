@@ -1,6 +1,7 @@
 <?php	
 	include("../config.php");
 	include "../session-checker.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -264,7 +265,7 @@
 
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
-			<?php include ("../../modules/user_sidenav.php") ?>
+			<?php include ("../../modules/sidenav.php") ?>
 			
 			<div class="accounts-con">
 				<?php include ("../../modules/header.php") ?>

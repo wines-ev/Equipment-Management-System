@@ -10,7 +10,7 @@
                     <span id="close-nav-icon" class="text-light fs-2" style="cursor:pointer" onclick="closeNav()">&#9776;</span>
                 </div>
 
-                <a class="d-flex align-items-center" href="dashboard.php">
+                <a class="d-flex align-items-center" href="../dashboard/user.php">
                     <i class="fa-solid fa-chart-simple fs-2 text-light text-center" style="width: 5rem;"></i>
                     <p class="navtab-text text-light fs-4 mb-0">Dashboard</p>
                 </a>
@@ -20,15 +20,15 @@
                         <i class="icon fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
                         <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Tickets</p>
                     </a>
-                    <i class="fa-solid navtab-text fa-caret-up text-light fs-4 px-3" id="collapse-ticket-trigger" data-bs-toggle="collapse" href="#collapse-ticket" role="button" aria-expanded="false" aria-controls="collapse-ticket"></i>
+                    <i class="fa-solid fa-caret-up text-light fs-4 px-3" id="collapse-ticket-trigger" data-bs-toggle="collapse" href="#collapse-ticket" role="button" aria-expanded="false" aria-controls="collapse-ticket"></i>
                 </div>
 
                 <div class="collapse show" id="collapse-ticket">
                     <div class="ms-5 ps-2 d-flex flex-column">
-                        <a class="text-light fs-5 py-1 ps-4" href="ticket-management.php">All tickets</a>
-                        <a class="text-light fs-5 py-1 ps-4" href = "create-ticket.php">Create new ticket</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="ticket-management.php?update">Update a ticket</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="ticket-management.php?delete">Delete a ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/ticket-management.php">All tickets</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/create-ticket.php">Create new ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/ticket-management.php?update">Update a ticket</a>
+                        <a class="text-light fs-5 py-1 ps-4" href="../ticket/ticket-management.php?delete">Delete a ticket</a>
                     </div>
                 </div>
 
