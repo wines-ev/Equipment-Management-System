@@ -11,11 +11,11 @@ if(isset($_POST['btnsubmit'])) {
 	if ($stmt = mysqli_prepare($link, $sql)) {
 		$datecreated = date("Y-m-d H:i:s");
 
-		mysqli_stmt_bind_param($stmt, "sssss", $ticket_number, $_POST['cmb_problem'], $_POST['txt_details'], $_SESSION['username'], $datecreated);
+		mysqli_stmt_bind_param($stmt, "sssss",  $_POST['txt_ticket_number'], $_POST['cmb_problem'], $_POST['txt_details'], $_SESSION['username'], $datecreated);
 
 		if (mysqli_stmt_execute($stmt)) {
 			header("location: ticket-management.php");
-			$_SESSION["ticket-added"] = $ticket_number;
+			$_SESSION["ticket-added"] = $_POST['txt_ticket_number'];
 		} else {
 			echo "Error inserting ticket";
 		}
@@ -52,6 +52,8 @@ if(isset($_POST['btnsubmit'])) {
 					<div class="mx-auto bg-white border p-5 rounded-4 mt-5 w-50">
 						<p class="fs-4 mb-5">Fill up this form and submit to create a new ticket</p>
 						<form acion = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "POST">
+
+							<input type="hidden" name="txt_ticket_number" value="<?php echo $ticket_number = date("Ymdhis"); ?>">
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Ticket number</span>
 								<input class="form-control fs-4" type="text" name = "txt_ticket_number" value="<?php echo $ticket_number ?>" disabled>
@@ -69,7 +71,7 @@ if(isset($_POST['btnsubmit'])) {
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Details</span>
-								<textarea class="form-control fs-4" name = "txt_details" rows="4" required> </textarea>
+								<textarea class="form-control fs-4" name = "txt_details" rows="4" required></textarea>
 							</div>
 
 

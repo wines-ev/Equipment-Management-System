@@ -122,7 +122,7 @@ if(isset($_POST['btnsubmit'])) {
 				<?php include ("../../modules/header.php") ?>
 				
 				<div class="d-flex justify-content-between mx-5">
-					<p class="fs-4 mb-0">Equipment / Add equipment</p>
+					<p class="fs-4 mb-0">Equipments / Add equipment</p>
 				</div>
 
 				<div class="container">

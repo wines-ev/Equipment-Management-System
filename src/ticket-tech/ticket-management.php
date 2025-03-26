@@ -29,14 +29,8 @@
 				<div class="modal-header">
 					<p class="modal-title fs-1" id="exampleModalLabel">Ticket
 						<?php 
-							if (isset($_SESSION["ticket-added"])) {
-								echo "added!";
-							}
-							else if (isset($_SESSION["ticket-updated"])) {
-								echo "updated!";
-							}
-							else if (isset($_SESSION["ticket-deleted"])) {
-								echo "deleted!";
+							if (isset($_SESSION["ticket-completed"])) {
+								echo "completed!";
 							}
 						?>
 					</p>
@@ -45,19 +39,10 @@
 				<div class="modal-body fs-4 my-4">
 					<p class="fs-4">
 						<?php 
-							if (isset($_SESSION["ticket-added"])) {
-								echo "Ticket #" . $_SESSION['ticket-added'] . " was added successfully.";
+							if (isset($_SESSION["ticket-completed"])) {
+								echo "Ticket #" . $_SESSION['ticket-completed'] . " was completed successfully.";
 								
 							}
-							else if (isset($_SESSION["ticket-updated"])) {
-								echo "Ticket #" . $_SESSION['ticket-updated'] . " was updated successfully.";
-								
-							}
-							else if (isset($_SESSION["ticket-deleted"])) {
-								echo "Ticket #" . $_SESSION['ticket-deleted'] . " was deleted successfully.";
-							}
-
-							
 						?>
 					
 					</p>
@@ -71,24 +56,23 @@
 
 
 	
-	<button type="button" id="caution-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#deleteModal">
-		Launch caution modal
+	<button type="button" id="complete-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#completeModal">
+		Launch complete modal
 	</button>
 
-	<div class="modal" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+	<div class="modal" id="completeModal" tabindex="-1" aria-labelledby="exampleModalLabel">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<p class="modal-title fs-1" id="exampleModalLabel">Caution!</p>
+					<p class="modal-title fs-1" id="exampleModalLabel">Important!</p>
 					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body fs-4 my-4">
-					<p class="fs-4">Are you sure you want to delete '<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-to-delete-placeholder"></span>' ?</p>
-					<p class="fs-4">This action cannot be undone.</p>
+					<p class="fs-4">Are you sure you want to complete '<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-to-complete-placeholder"></span>' ?</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary fs-4 px-4" data-bs-dismiss="modal">Cancel</button>
-					<button class="btn btn-danger fs-4 px-5" onclick="delete_ticket()">Yes</a>
+					<button class="btn btn-primary fs-4 px-5" onclick="complete_ticket()">Yes</a>
 				</div>
 			</div>
 		</div>
@@ -96,11 +80,11 @@
 
 
 
-	<button type="button" id="delete-error-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#deleteErrorModal">
-		Launch delete error modal
+	<button type="button" id="complete-error-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#completeErrorModal">
+		Launch complete error modal
 	</button>
 
-	<div class="modal" id="deleteErrorModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+	<div class="modal" id="completeErrorModal" tabindex="-1" aria-labelledby="exampleModalLabel">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -108,8 +92,8 @@
 					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body fs-4 my-4">
-					<p class="fs-4">'<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-delete-error-placeholder"></span>' cannot be deleted.</p>
-					<p class="fs-4">Ticket must be closed before proceeding.</p>
+					<p class="fs-4">'<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-complete-error-placeholder"></span>' cannot be completed.</p>
+					<p class="fs-4">Ticket must be on-going before proceding.</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary fs-4 px-5" data-bs-dismiss="modal">OK</button>
@@ -117,88 +101,6 @@
 			</div>
 		</div>
 	</div>	
-
-
-
-
-    <button type="button" id="details-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#details-modal">
-		Launch details modal
-	</button>
-
-    <div class="modal modal-lg" id="details-modal" tabindex="-1" aria-labelledby="exampleModalLabel">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content" onmouse>
-				<div class="modal-header">
-					<p class="modal-title fs-1" id="exampleModalLabel">Ticket #<span id="details_ticket_num"></span> </p>
-					<a href="ticket-management.php" type="button" class="btn-close fs-4" aria-label="Close"></a>
-				</div>
-				<div class="modal-body fs-4 px-3">
-
-					<div class="d-flex gap-3">
-						<div class="flex-fill">
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Problem</span>
-								<input class="form-control fs-4" id="txt_problem" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Details</span>
-								<input class="form-control fs-4" id="txt_details" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Status</span>
-								<input class="form-control fs-4" id="txt_status" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Created By</span>
-								<input class="form-control fs-4" id="txt_created_by" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Created</span>
-								<input class="form-control fs-4" id="txt_date_created" disabled> </input>
-							</div>
-						</div>
-
-						<div class="flex-fill">
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Assigned To</span>
-								<input class="form-control fs-4" id="txt_assigned_to" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Assigned</span>
-								<input class="form-control fs-4" id="txt_date_assigned" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Completed</span>
-								<input class="form-control fs-4" id="txt_date_completed" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Approved By</span>
-								<input class="form-control fs-4" id="txt_approved_by" disabled> </input>
-							</div>
-
-							<div class="input-group mb-3">
-								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Date Approved</span>
-								<input class="form-control fs-4" id="txt_date_approved" disabled> </input>
-							</div>
-
-						</div>
-					</div>
-                    
-				</div>
-				<div class="modal-footer">
-					<a href="ticket-management.php" class="btn btn-primary fs-4 px-5">OK</a>
-				</div>
-			</div>
-		</div>
-	</div>	
-
 
 
     
@@ -233,18 +135,10 @@
             echo "<script>document.getElementById('details-pop-up-trigger').click();</script>";
         }
         
-        if (isset($_SESSION["ticket-added"])) {
+        if (isset($_SESSION["ticket-completed"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["ticket-added"]);
+			unset($_SESSION["ticket-completed"]);
 		}	
-		else if (isset($_SESSION["ticket-updated"])) {
-			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["ticket-updated"]);
-		}	
-		else if (isset($_SESSION["ticket-deleted"])) {
-			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["ticket-deleted"]);
-		} 
 
 		
 	?>
@@ -264,7 +158,7 @@
 
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
-			<?php include ("../../modules/user_sidenav.php") ?>
+			<?php include ("../../modules/sidenav.php") ?>
 			
 			<div class="accounts-con">
 				<?php include ("../../modules/header.php") ?>
@@ -292,7 +186,7 @@
 									$offset = (intval($_GET['page']) - 1) * 10;
 								}
 
-								$sql = "SELECT * FROM ticket_tbl WHERE created_by = ? ORDER BY date_created DESC LIMIT 21 OFFSET " . $offset;
+								$sql = "SELECT * FROM ticket_tbl WHERE assigned_to = ? ORDER BY date_created DESC LIMIT 21 OFFSET " . $offset;
 
 								if($stmt = mysqli_prepare($link, $sql)) {
                                     mysqli_stmt_bind_param($stmt, "s", $_SESSION["username"]);
@@ -303,8 +197,8 @@
 								}
 							}
 							else {
- 
-								$sql = "SELECT * FROM ticket_tbl WHERE (ticket_number LIKE ? OR problem LIKE ? OR status LIKE ?) AND created_by = ? ORDER BY date_created DESC LIMIT 11";
+					
+								$sql = "SELECT * FROM ticket_tbl WHERE (ticket_number LIKE ? OR problem LIKE ? OR status LIKE ?) AND assigned_to = ? ORDER BY date_created DESC LIMIT 11";
                                 
 								if($stmt = mysqli_prepare($link, $sql)) {
 									$text_value = "%" . $_POST["txtsearch"] . "%";
@@ -319,7 +213,7 @@
 							}
 
 							function buildtable($result) {
-								if(mysqli_num_rows($result) > 0) {
+								if(mysqli_num_rows($result) > 0) {	
 									echo "<table id='account-table' class='shadow'>";
 									
 									echo "<thead><tr>";
@@ -327,6 +221,7 @@
 									<th class='fs-4'>Ticket Number</th>
 									<th class='fs-4'>Problem</th>
 									<th class='fs-4'>Date</th>
+									<th class='fs-4'>Status</th>
 									<th class='fs-4'>Status</th>
 									<th class='fs-4'>Action</th>";
 									
@@ -342,18 +237,17 @@
 											echo "<td class='fs-5'>" . $row['problem'] . "</td>";
 	
 											$date =  explode(' ', $row['date_created']);
-	
 											echo "<td class='fs-5'>" . $date[0] . "</td>";
+
+											$time =  date('h:i:s a', strtotime($date[1]));
+											echo "<td class='fs-5'>" . $time . "</td>";
+
+
 											echo "<td id='status' class='fs-5'>" . $row['status'] . "</td>";
 											echo "<td>";
-											echo "<button title='Details' class='details-modal-btn btn btn-success text-light fs-5 me-3'>
-													<i class='fa-solid fa-eye'></i>
-												</button>";
-											echo "<a title='Edit' href='update-ticket.php?ticket_number=" . urlencode($row['ticket_number']) . "' class='btn bg-blue text-light fs-5 me-2'>
-													<i class='fa-solid fa-pen-to-square'></i>
-												</a> ";
-											echo " <button title='Delete' id='caution-modal-btn' class=' btn btn-danger text-light fs-5'>
-													<i class='fa-solid fa-trash-can'></i>
+
+											echo " <button title='Complete' id='complete-modal-btn' class=' btn btn-success text-light fs-5'>
+													<i class='fa-solid fa-circle-check'></i>
 												</button>";
 											echo "</td>";	
 											echo "</tr>";
@@ -468,21 +362,21 @@
 	const data_row = Array.from(document.getElementsByClassName("data-row"));
 
 	data_row.forEach(element => {
-		element.querySelector('#caution-modal-btn').addEventListener('click', () => {
-			if (element.querySelector('#status').innerHTML == "CLOSED") {
-				document.getElementById('ticket-to-delete-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
-				document.getElementById('caution-pop-up-trigger').click();
+		element.querySelector('#complete-modal-btn').addEventListener('click', () => {
+			if (element.querySelector('#status').innerHTML == "ON-GOING") {
+				document.getElementById('ticket-to-complete-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
+				document.getElementById('complete-pop-up-trigger').click();
 			}
 			else {
-				document.getElementById('ticket-delete-error-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
-				document.getElementById('delete-error-pop-up-trigger').click();
+				document.getElementById('ticket-complete-error-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
+				document.getElementById('complete-error-pop-up-trigger').click();
 			}
 		});
 	});
 
 
-	function delete_ticket() {
-		window.location.href = "delete-ticket.php?ticket_number=" + document.getElementById('ticket-to-delete-placeholder').innerHTML;
+	function complete_ticket() {
+		window.location.href = "complete-ticket.php?ticket_number=" + document.getElementById('ticket-to-complete-placeholder').innerHTML;
 	}
 
 	const rows = document.getElementById("account-table").childNodes[1].childNodes;

@@ -141,12 +141,16 @@
 					</form>
 				</div>
 				
-				<div class="accout-table-con mx-5 fs-5 shadow-lg">
+				<div class="accout-table-con mx-5 fs-5">
 					<div class="account-table-wrapper">
 						<?php
 
 							if(!isset($_POST["txtsearch"])) {
-								$sql = "SELECT * FROM user_tbl";
+								$offset = 0;
+								if (isset($_GET['page'])) {
+									$offset = (intval($_GET['page']) - 1) * 10;
+								}
+								$sql = "SELECT * FROM user_tbl LIMIT 21 OFFSET " . $offset;
 
 								if($stmt = mysqli_prepare($link, $sql)) {
 									if (mysqli_stmt_execute($stmt)) {
@@ -156,7 +160,7 @@
 								}
 							}
 							else {
-								$sql = "SELECT * FROM user_tbl WHERE username LIKE ? OR usertype LIKE ? ORDER BY username";
+								$sql = "SELECT * FROM user_tbl WHERE username LIKE ? OR usertype LIKE ? ORDER BY username LIMIT 10";
 
 								if($stmt = mysqli_prepare($link, $sql)) {
 									$text_value = "%" . $_POST["txtsearch"] . "%";
@@ -172,7 +176,7 @@
 
 							function buildtable($result) {
 								if(mysqli_num_rows($result) > 0) {
-									echo "<table id='account-table'>";
+									echo "<table class='shadow' id='account-table'>";
 									
 									echo "<thead><tr>";
 									echo "
@@ -183,23 +187,28 @@
 									<th class='fs-4'>Date Created</th>
 									<th class='fs-4'>Action</th>";
 									echo "</tr></thead>";
-						
 
+								$_SESSION['count'] = 0;
+								$_SESSION['excess'] = 0;
 								while($row = mysqli_fetch_array($result)) {
-									echo "<tr id='data-row' >";
-									echo "<td class='fs-5'>" . $row['username'] . "</td>";
-									echo "<td class='fs-5'>" . $row['user_type'] . "</td>";
-									echo "<td class='fs-5'>" . $row['status'] . "</td>";
-									echo "<td class='fs-5'>" . $row['created_by'] . "</td>";
-									echo "<td class='fs-5'>" . $row['date_created'] . "</td>";
-									echo "<td>";
-									echo "<a href='update-account.php?username=" . urlencode($row['username']) . "' class='btn bg-blue text-light fs-5 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
-									echo "
-										<button class='caution-modal-btn btn btn-danger text-light fs-5'>
-											<i class='fa-solid fa-trash-can'></i>
-										</button>";
-									echo "</td>";
-									echo "</tr>";
+									
+									if (intval($_SESSION['count']) < 10) {
+										$_SESSION['count'] = intval($_SESSION['count']) + 1;
+										echo "<tr id='data-row' >";
+										echo "<td class='fs-5'>" . $row['username'] . "</td>";
+										echo "<td class='fs-5'>" . $row['user_type'] . "</td>";
+										echo "<td class='fs-5'>" . $row['status'] . "</td>";
+										echo "<td class='fs-5'>" . $row['created_by'] . "</td>";
+										echo "<td class='fs-5'>" . $row['date_created'] . "</td>";
+										echo "<td>";
+										echo "<a href='update-account.php?username=" . urlencode($row['username']) . "' class='btn bg-blue text-light fs-5 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
+										echo "
+											<button class='caution-modal-btn btn btn-danger text-light fs-5'>
+												<i class='fa-solid fa-trash-can'></i>
+											</button>";
+										echo "</td>";
+										echo "</tr>";
+									}
 								}
 									echo "</table>";
 								}
@@ -209,6 +218,73 @@
 							}
 						?>
 					</div>
+
+					<nav aria-label="Page navigation example">
+						
+						<div class="mt-4 d-flex justify-content-between align-items-center">
+							<?php
+								$page = 1;
+								if (isset($_GET['page'])) {
+									$page = intval($_GET['page']);
+								}
+							?>
+							<p class="fs-4">Showing entries <?php echo (($page - 1) * 10) + 1 . " - " . intval($_SESSION['count']) + (($page - 1) * 10); ?></p>
+							<ul class="pagination">
+								
+								
+								<?php
+							
+									if ($page == 1) {
+										// if in page 1, disable previous button
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark disabled' href='account-management.php?page=" . $page - 1 . "'>Previous</a></li>";
+									}
+									else {
+										// else (not in page 1), enable previous button
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='account-management.php?page=" . $page - 1 . "'>Previous</a></li>";
+									}
+
+									
+
+									if ($page - 2 > 0 && intval($_SESSION['excess']) == 0) {
+										// if in last page (no more excess) and there are 2 previous pages, print the left most page
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='account-management.php?page=" . $page - 2 . "'>" . $page - 2 . "</a></li>";
+									}
+									
+									if ($page - 1 > 0) {
+										// if on page 2 or higher, print previous page
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='account-management.php?page=" . $page - 1 . "'>" . $page - 1 . "</a></li>";
+									}
+
+									// print the active page
+									echo "<li class='page-item active fs-4 text-dark'><a class='page-link fs-4 text-light' href='account-management.php?page=" . $page . "'>" . $page . "</a></li>";
+
+									if (intval($_SESSION['excess']) > 0) {
+										// if there is next page (has excess), print the next page
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='account-management.php?page=" . $page + 1 . "'>" . $page + 1 . "</a></li>";
+									}
+									
+
+									if ($page - 1 <= 0 && intval($_SESSION['excess']) > 10) {
+
+										// if in first page and there is 2 next pages, print the right most page
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='account-management.php?page=" . $page + 2 . "'>" . $page + 2 . "</a></li>";
+									}
+
+									if (intval($_SESSION['excess']) == 0) {
+										// if in last page (no more excess), disable next button
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark disabled' href='account-management.php?page=" . $page + 1 . "'>Next</a></li>";
+									}
+									else {
+										// else, enable next button
+										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='account-management.php?page=" . $page + 1 . "'>Next</a></li>";
+									}
+									
+
+								?>
+								
+						</ul>
+						</div>
+					</nav>
 				</div>
 
 				

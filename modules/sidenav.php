@@ -10,27 +10,41 @@
                     <span id="close-nav-icon" class="text-light fs-2" style="cursor:pointer" onclick="closeNav()">&#9776;</span>
                 </div>
 
-                <a class="d-flex align-items-center" href="dashboard.php">
+                <?php
+                    if ($_SESSION['user_type'] == "ADMINISTRATOR") {
+                        $dashboard = "../dashboard/admin.php";
+                    } 
+                    else if ($_SESSION['user_type'] == "TECHNICAL") {
+                        $dashboard = "../dashboard/tech.php";
+                    }
+                    else {
+                        $dashboard = "../dashboard/user.php";
+                    }
+                ?>
+
+                <a class="d-flex align-items-center" href="<?php echo $dashboard; ?>">
                     <i class="fa-solid fa-chart-simple fs-2 text-light text-center" style="width: 5rem;"></i>
                     <p class="navtab-text text-light fs-4 mb-0">Dashboard</p>
                 </a>
 
+                <?php
+                    if ($_SESSION['user_type'] == "ADMINISTRATOR") {
+                ?>
+                
+
                 <div class="d-flex align-items-center mt-4">
                     <a class="d-flex align-items-center" href="../account/account-management.php">
                         <i class="icon fa-solid fa-users fs-2 text-light text-center" id="account-icon" style="width: 5rem;"></i>
-                        <p class=" navtab-text text-light fs-4 mb-0" style="width: 9rem;">Accounts</p> 
+                        <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Accounts</p> 
                     </a>
-                    <i class="fa-solid fa-caret-up text-light fs-4 px-3" id="collapse-account-trigger" data-bs-toggle="collapse" href="#collapse-account" role="button" aria-expanded="false" aria-controls="collapseAccount"></i>
                 </div>
  
-                <div class="collapse show" id="collapse-account">
-                    <div class="ms-5 ps-2 d-flex flex-column">
-                        <a class="text-light fs-5 py-1 ps-4" href="../account/account-management.php">All accounts</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../account/create-account.php">Create new account</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../account/account-management.php?update">Update an account</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../account/account-management.php?delete">Delete an account</a>
-                    </div>
-                </div>
+          
+
+                <?php
+                    }
+
+                ?>
 
 
                 <div class="d-flex align-items-center mt-4">
@@ -38,18 +52,29 @@
                         <i class="icon fa-solid fa-computer fs-2 text-light text-center" id="equipment-icon" style="width: 5rem;"></i>
                         <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Equipments</p>
                     </a>
-                    <i class="fa-solid fa-caret-up text-light fs-4 px-3" id="collapse-equipment-trigger" data-bs-toggle="collapse" href="#collapse-equipment" role="button" aria-expanded="false" aria-controls="collapse-equipment"></i>
                 </div>
 
 
-                <div class="collapse show" id="collapse-equipment">
-                    <div class="ms-5 ps-2 d-flex flex-column">
-                        <a class="text-light fs-5 py-1 ps-4" href="../equipment/equipment-management.php">All equipments</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../equipment/add-equipment.php">Add equipment</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../equipment/equipment-management.php?update">Update equipment</a>
-                        <a class="text-light fs-5 py-1 ps-4" href="../equipment/equipment-management.php?delete">Delete equipment</a>
-                    </div>
+
+                <?php
+                    if ($_SESSION['user_type'] == "ADMINISTRATOR") {
+                        $ticket_path = "../ticket-admin/";
+                    } 
+                    else if ($_SESSION['user_type'] == "TECHNICAL") {
+                        $ticket_path = "../ticket-tech/";
+                    }
+                    else {
+                        $ticket_path = "../ticket/";
+                    }
+                ?>
+
+                <div class="d-flex align-items-center mt-4">
+                    <a class="d-flex align-items-center" href="<?php echo $ticket_path ?>ticket-management.php">
+                        <i class="icon fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
+                        <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Tickets</p>
+                    </a>
                 </div>
+
 
 
                 
@@ -63,22 +88,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    Array.from(document.getElementsByClassName("fa-caret-up")).forEach(element => {
-        element.addEventListener('click', (e) => {
-            e.target.style.transition = "transform 0.5s";
-            
-
-            if (Array.from(e.target.classList).includes("collapsed")) {
-                e.target.classList.remove("rotate-0");
-                e.target.classList.add("rotate-180");
-            }
-            else {
-                e.target.classList.remove("rotate-180");
-                e.target.classList.add("rotate-0");
-            }
-
-        })
-    });
-</script>

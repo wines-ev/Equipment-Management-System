@@ -1,6 +1,7 @@
 <?php	
 	include("../config.php");
 	include "../session-checker.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -8,8 +9,8 @@
 <head>
 	<meta charset="UTF-8">		
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Equipment Management</title>
-	<link rel="stylesheet" href="../../css/style.css">
+	<title>Ticket Management</title>
+	
 	<link rel="stylesheet" href="../../plugins/bs/bootstrap.min.css">
 	<script src="../../plugins/bs/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/acb62c1ffe.js" crossorigin="anonymous"></script>
@@ -29,11 +30,11 @@
 				<div class="modal-header">
 					<p class="modal-title fs-1" id="exampleModalLabel">Ticket
 						<?php 
-							if (isset($_SESSION["ticket-added"])) {
-								echo "added!";
+							if (isset($_SESSION["ticket-assigned"])) {
+								echo "assigned!";
 							}
-							else if (isset($_SESSION["ticket-updated"])) {
-								echo "updated!";
+							else if (isset($_SESSION["ticket-approved"])) {
+								echo "approved!";
 							}
 							else if (isset($_SESSION["ticket-deleted"])) {
 								echo "deleted!";
@@ -45,12 +46,12 @@
 				<div class="modal-body fs-4 my-4">
 					<p class="fs-4">
 						<?php 
-							if (isset($_SESSION["ticket-added"])) {
-								echo "Ticket #" . $_SESSION['ticket-added'] . " was added successfully.";
+							if (isset($_SESSION["ticket-assigned"])) {
+								echo "Ticket #" . $_SESSION['ticket-assigned'] . " was assigned successfully.";
 								
 							}
-							else if (isset($_SESSION["ticket-updated"])) {
-								echo "Ticket #" . $_SESSION['ticket-updated'] . " was updated successfully.";
+							else if (isset($_SESSION["ticket-approved"])) {
+								echo "Ticket #" . $_SESSION['ticket-approved'] . " was approved successfully.";
 								
 							}
 							else if (isset($_SESSION["ticket-deleted"])) {
@@ -109,7 +110,97 @@
 				</div>
 				<div class="modal-body fs-4 my-4">
 					<p class="fs-4">'<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-delete-error-placeholder"></span>' cannot be deleted.</p>
-					<p class="fs-4">Ticket must be closed before proceeding.</p>
+					<p class="fs-4">Close the ticket before deleting.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary fs-4 px-5" data-bs-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+
+
+	<button type="button" id="approve-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#aprroveModal">
+		Launch approve modal
+	</button>
+
+	<div class="modal" id="aprroveModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title fs-1" id="exampleModalLabel">Important!</p>
+					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body fs-4 my-4">
+					<p class="fs-4">Are you sure you want to approve '<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-to-approve-placeholder"></span>' ?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary fs-4 px-4" data-bs-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary fs-4 px-5" onclick="approve_ticket()">Yes</a>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	<button type="button" id="approve-error-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#approveErrorModal">
+		Launch approve error modal
+	</button>
+
+	<div class="modal" id="approveErrorModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title fs-1" id="exampleModalLabel">Error!</p>
+					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body fs-4 my-4">
+					<p class="fs-4">'<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-approve-error-placeholder"></span>' cannot be approved.</p>
+					<p class="fs-4">Ticket must wait for approval before proceeding.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary fs-4 px-5" data-bs-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	<button type="button" id="approve-closed-error-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#approveClosedErrorModal">
+		Launch approved closed error modal
+	</button>
+
+	<div class="modal" id="approveClosedErrorModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title fs-1" id="exampleModalLabel">Error!</p>
+					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body fs-4 my-4">
+					<p class="fs-4">'<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-approve-closed-error-placeholder"></span>' cannot be approved.</p>
+					<p class="fs-4">Ticket is already closed.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary fs-4 px-5" data-bs-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	<button type="button" id="assign-error-pop-up-trigger" class="pop-up-trigger btn btn-primary fs-4 d-none" data-bs-toggle="modal" data-bs-target="#assignErrorModal">
+		Launch assign error modal
+	</button>
+
+	<div class="modal" id="assignErrorModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title fs-1" id="exampleModalLabel">Error!</p>
+					<button type="button" class="btn-close fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body fs-4 my-4">
+					<p class="fs-4">'<span class="fw-bold">Ticket #</span><span class="fw-bold" id="ticket-assign-error-placeholder"></span>' cannot be assigned.</p>
+					<p class="fs-4">Ticket must be pending or on-going before proceeding.</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary fs-4 px-5" data-bs-dismiss="modal">OK</button>
@@ -217,14 +308,19 @@
                     echo "<script>document.getElementById('txt_status').value = '" . $result_details['status'] . "'; </script>";
                     echo "<script>document.getElementById('txt_created_by').value = '" . $result_details['created_by'] . "'; </script>";
 
-                    $date_created_details = explode(" ",$result_details['date_created']);
-
+                    $date_created_details = explode(" ", $result_details['date_created']);
                     echo "<script>document.getElementById('txt_date_created').value = '" . $date_created_details[0] . "'; </script>";
+
                     echo "<script>document.getElementById('txt_assigned_to').value = '" . $result_details['assigned_to'] . "'; </script>";
-                    echo "<script>document.getElementById('txt_date_assigned').value = '" . $result_details['date_assigned'] . "'; </script>";
+
+					$date_assigned_details = explode(" ", $result_details['date_assigned']);
+                    echo "<script>document.getElementById('txt_date_assigned').value = '" . $date_assigned_details[0] . "'; </script>";
+
                     echo "<script>document.getElementById('txt_date_completed').value = '" . $result_details['date_completed'] . "'; </script>";
                     echo "<script>document.getElementById('txt_approved_by').value = '" . $result_details['approved_by'] . "'; </script>";
-                    echo "<script>document.getElementById('txt_date_approved').value = '" . $result_details['date_approved'] . "'; </script>";
+
+					$date_approved_details = explode(" ", $result_details['date_approved']);
+                    echo "<script>document.getElementById('txt_date_approved').value = '" . $date_approved_details[0] . "'; </script>";
                     
 
                 }
@@ -233,13 +329,13 @@
             echo "<script>document.getElementById('details-pop-up-trigger').click();</script>";
         }
         
-        if (isset($_SESSION["ticket-added"])) {
+        if (isset($_SESSION["ticket-assigned"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["ticket-added"]);
+			unset($_SESSION["ticket-assigned"]);
 		}	
-		else if (isset($_SESSION["ticket-updated"])) {
+		else if (isset($_SESSION["ticket-approved"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
-			unset($_SESSION["ticket-updated"]);
+			unset($_SESSION["ticket-approved"]);
 		}	
 		else if (isset($_SESSION["ticket-deleted"])) {
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
@@ -264,7 +360,7 @@
 
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
-			<?php include ("../../modules/user_sidenav.php") ?>
+			<?php include ("../../modules/sidenav.php") ?>
 			
 			<div class="accounts-con">
 				<?php include ("../../modules/header.php") ?>
@@ -292,10 +388,9 @@
 									$offset = (intval($_GET['page']) - 1) * 10;
 								}
 
-								$sql = "SELECT * FROM ticket_tbl WHERE created_by = ? ORDER BY date_created DESC LIMIT 21 OFFSET " . $offset;
+								$sql = "SELECT * FROM ticket_tbl ORDER BY date_created DESC LIMIT 21 OFFSET " . $offset;
 
 								if($stmt = mysqli_prepare($link, $sql)) {
-                                    mysqli_stmt_bind_param($stmt, "s", $_SESSION["username"]);
 									if (mysqli_stmt_execute($stmt)) {
 										$result = mysqli_stmt_get_result($stmt);
 										buildtable($result);
@@ -304,13 +399,12 @@
 							}
 							else {
  
-								$sql = "SELECT * FROM ticket_tbl WHERE (ticket_number LIKE ? OR problem LIKE ? OR status LIKE ?) AND created_by = ? ORDER BY date_created DESC LIMIT 11";
+								$sql = "SELECT * FROM ticket_tbl WHERE ticket_number LIKE ? OR problem LIKE ? OR status LIKE ? ORDER BY date_created DESC LIMIT 15";
                                 
 								if($stmt = mysqli_prepare($link, $sql)) {
 									$text_value = "%" . $_POST["txtsearch"] . "%";
 									
-									
-									mysqli_stmt_bind_param($stmt, "ssss", $text_value, $text_value, $text_value, $_SESSION["username"]);
+									mysqli_stmt_bind_param($stmt, "sss", $text_value, $text_value, $text_value);
 									if (mysqli_stmt_execute($stmt)) {
 										$result = mysqli_stmt_get_result($stmt);
 										buildtable($result);
@@ -327,6 +421,7 @@
 									<th class='fs-4'>Ticket Number</th>
 									<th class='fs-4'>Problem</th>
 									<th class='fs-4'>Date</th>
+									<th class='fs-4'>Time</th>
 									<th class='fs-4'>Status</th>
 									<th class='fs-4'>Action</th>";
 									
@@ -342,17 +437,25 @@
 											echo "<td class='fs-5'>" . $row['problem'] . "</td>";
 	
 											$date =  explode(' ', $row['date_created']);
-	
 											echo "<td class='fs-5'>" . $date[0] . "</td>";
+
+											$time =  date('h:i:s a', strtotime($date[1]));
+											echo "<td class='fs-5'>" . $time . "</td>";
+
+
+
 											echo "<td id='status' class='fs-5'>" . $row['status'] . "</td>";
 											echo "<td>";
-											echo "<button title='Details' class='details-modal-btn btn btn-success text-light fs-5 me-3'>
+											echo "<button title='Details' class='details-modal-btn btn btn-info text-light fs-5' style='width: 3rem'>
 													<i class='fa-solid fa-eye'></i>
+												</button> ";
+											echo "<button title='Assign' id='assign-modal-btn' class='btn bg-blue text-light fs-5'>
+													<i class='fa-solid fa-pen'></i>
+												</button> ";
+											echo "<button title='Approve' id='approve-modal-btn' class='btn btn-success text-light fs-5'>
+													<i class='fa-solid fa-thumbs-up'></i>
 												</button>";
-											echo "<a title='Edit' href='update-ticket.php?ticket_number=" . urlencode($row['ticket_number']) . "' class='btn bg-blue text-light fs-5 me-2'>
-													<i class='fa-solid fa-pen-to-square'></i>
-												</a> ";
-											echo " <button title='Delete' id='caution-modal-btn' class=' btn btn-danger text-light fs-5'>
+											echo " <button title='Delete' id='caution-modal-btn' class='btn btn-danger text-light fs-5'>
 													<i class='fa-solid fa-trash-can'></i>
 												</button>";
 											echo "</td>";	
@@ -458,16 +561,15 @@
 
     for (let btn of details_triggers) {
 		btn.addEventListener('click', () => {
-
             window.location.href = "ticket-management.php?ticket_details=" + btn.parentNode.parentNode.childNodes[0].innerHTML;
-
-            
 		});
 	}
 
 	const data_row = Array.from(document.getElementsByClassName("data-row"));
 
 	data_row.forEach(element => {
+
+		// delete modal oparations
 		element.querySelector('#caution-modal-btn').addEventListener('click', () => {
 			if (element.querySelector('#status').innerHTML == "CLOSED") {
 				document.getElementById('ticket-to-delete-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
@@ -478,6 +580,35 @@
 				document.getElementById('delete-error-pop-up-trigger').click();
 			}
 		});
+
+		// approve modal oparations
+		element.querySelector('#approve-modal-btn').addEventListener('click', () => {
+			if (element.querySelector('#status').innerHTML == "CLOSED") {
+				document.getElementById('ticket-approve-closed-error-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
+				document.getElementById('approve-closed-error-pop-up-trigger').click();
+			}
+
+			else if (element.querySelector('#status').innerHTML == "FOR APPROVAL") {
+				document.getElementById('ticket-to-approve-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
+				document.getElementById('approve-pop-up-trigger').click();
+			}
+			else {
+				document.getElementById('ticket-approve-error-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
+				document.getElementById('approve-error-pop-up-trigger').click();
+			}
+		});
+
+		// assign  modal oparations
+		element.querySelector('#assign-modal-btn').addEventListener('click', () => {
+			if (element.querySelector('#status').innerHTML == "PENDING" || element.querySelector('#status').innerHTML == "ON-GOING") {
+				window.location.href = "assign-ticket.php?ticket_number=" + element.querySelector('#ticket-number').innerHTML;
+			}
+			else {
+				document.getElementById('ticket-assign-error-placeholder').innerHTML = element.querySelector('#ticket-number').innerHTML;
+				document.getElementById('assign-error-pop-up-trigger').click();
+			}
+		});
+
 	});
 
 
@@ -485,12 +616,15 @@
 		window.location.href = "delete-ticket.php?ticket_number=" + document.getElementById('ticket-to-delete-placeholder').innerHTML;
 	}
 
-	const rows = document.getElementById("account-table").childNodes[1].childNodes;
 
+	function approve_ticket() {
+		window.location.href = "approve-ticket.php?ticket_number=" + document.getElementById('ticket-to-approve-placeholder').innerHTML;
+	}
+
+
+	const rows = document.getElementById("account-table").childNodes[1].childNodes;
 	
 	for (var i = 0; i < rows.length; i++) {
-
-
 		if (i%2 == 0) {
 			rows[i].classList.add("bg-blue-50");
 		}

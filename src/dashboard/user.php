@@ -46,7 +46,7 @@
                                         <p class="card-text fs-5">
                                             Track, organize, and manage your support tickets all in one place.
                                         </p>
-                                        <a href="ticket-management.php" class="btn btn-primary fs-5 mt-3">Manage tickets</a>
+                                        <a href="../ticket/ticket-management.php" class="btn btn-primary fs-5 mt-3">Manage tickets</a>
                                     </div>
                                 </div>
                             </div>

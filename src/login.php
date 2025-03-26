@@ -20,10 +20,13 @@ if (isset($_POST['btnlogin'])) {
 				$_SESSION['user_type'] = $account['user_type'];
 				
 				if ($account['user_type'] == "USER") {
-					header("location: ticket/dashboard.php");
+					header("location: dashboard/user.php");
+				}
+				else if ($account['user_type'] == "TECHNICAL") {
+					header("location: dashboard/tech.php");
 				}
 				else {
-					header("location: equipment/equipment-management.php");
+					header("location: dashboard/admin.php");
 				}
 				
 			} else {

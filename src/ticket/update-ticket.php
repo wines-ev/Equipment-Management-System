@@ -180,7 +180,7 @@
 
 				<div class="container">
 					<div class="mx-auto bg-white border p-5 rounded-4 mt-5 w-50 shadow">
-						<p class="fs-4 mb-5">Change the value on this form and submit to update the account.</p>
+						<p class="fs-4 mb-5">Change the value on this form and submit to update the ticket.</p>
 
 						<form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="POST">
 							<div class="input-group mb-3">
@@ -203,7 +203,7 @@
 
 							<div class="input-group mb-3">
 								<span class="input-group-text fs-4 py-3" id="basic-addon1" style="width: 35%;">Details</span>
-								<textarea class="form-control fs-4" id="txt_details" name="txt_details" rows="3" maxlength="200"><?php echo $ticket['details']; ?></textarea>
+								<textarea class="form-control fs-4" id="txt_details" name="txt_details" rows="3" maxlength="200"><?php echo trim($ticket['details']); ?></textarea>
 							</div>
 							
 							<div class="d-flex mt-5 gap-3 justify-content-end">

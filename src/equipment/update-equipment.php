@@ -183,19 +183,21 @@
 	
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
-			<?php include ("../../modules/sidenav.php") ?>
+			<?php 
+			include ("../../modules/sidenav.php") 
+			?>
 			
 			<div class="accounts-con">
 				<?php include ("../../modules/header.php") ?>
 				
 				<div class="d-flex justify-content-between mx-5">
-					<p class="fs-4 mb-0">Accounts / Update account</p>
+					<p class="fs-4 mb-0">Equipments / Update equipment</p>
 					
 				</div>
 
 				<div class="container">
 					<div class="mx-auto bg-white border p-5 rounded-4 mt-5 w-50 shadow">
-						<p class="fs-4 mb-5">Change the value on this form and submit to update the account.</p>
+						<p class="fs-4 mb-5">Change the value on this form and submit to update the equipment.</p>
 
 						<form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="POST">
 							<div class="input-group mb-3">

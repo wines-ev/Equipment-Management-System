@@ -114,19 +114,11 @@ a {
     flex: 1;
 }
 
-.accout-table-con {
-    height: 79vh;
-    overflow-y: auto;
-}
 
 .accout-table-con::-webkit-scrollbar {
     width: 0;
 }
 
-.accout-table-wrapper {
-    height: 100%;
-    overflow-y: hidden;
-}
 
 .accout-table-con table {
     width: 100%;
@@ -147,6 +139,15 @@ a {
 }
 
 
+.dashboard-grid-con {
+    overflow-y: auto;
+    height: 59.5rem;
+}
+
+.dashboard-grid-con::-webkit-scrollbar {
+    display: none;
+}
+
 .rotate-0 {
     transform: rotate(0deg) !important; 
 }
@@ -154,6 +155,7 @@ a {
 .rotate-180 {
     transform: rotate(180deg) !important; 
 }
+
 
 
 
@@ -170,7 +172,7 @@ table tr th {
 }
 
 .icon-fix {
-    padding-left: 2px;
+    padding-left: 3px;
     text-align: start !important;
 }
 
