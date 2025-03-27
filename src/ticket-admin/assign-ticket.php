@@ -68,8 +68,12 @@
 				<?php include ("../../modules/header.php") ?>
 				
 				<div class="d-flex justify-content-between mx-5">
-					<p class="fs-4 mb-0">Tickets / Assign ticket</p>
-					
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item fs-4"><a href="ticket-management.php">Tickets</a></li>
+							<li class="breadcrumb-item fs-4 active" aria-current="page">Assign tickets</li>
+						</ol>
+					</nav>
 				</div>
 
 				<div class="container">

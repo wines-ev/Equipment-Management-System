@@ -354,10 +354,7 @@
 
 
 
-
-
-
-
+	
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
 			<?php include ("../../modules/sidenav.php") ?>
@@ -366,7 +363,12 @@
 				<?php include ("../../modules/header.php") ?>
 				
 				<div class="d-flex justify-content-between mx-5 mb-4 pb-2">
-					<p class="fs-4 mb-0">Tickets / All tickets</p>
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item fs-4"><a href="ticket-management.php">Tickets</a></li>
+							<li class="breadcrumb-item fs-4 active" aria-current="page">All tickets</li>
+						</ol>
+					</nav>
 					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "POST" class="d-flex gap-3">
 						<div class="input-group flex-fill" style="width: 30rem;">
 							<input type="text" class="form-control fs-4" name="txtsearch" placeholder="Search something">
@@ -501,38 +503,38 @@
 									}
 									else {
 										// else (not in page 1), enable previous button
-										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='ticket-management.php?page=" . $page - 1 . "'>Previous</a></li>";
+										echo "<li class='page-item'><a class='page-link fs-4 px-3 text-dark' href='ticket-management.php?page=" . $page - 1 . "'>Previous</a></li>";
 									}
 
 									
 
 									if ($page - 2 > 0 && intval($_SESSION['excess']) == 0) {
 										// if in last page (no more excess) and there are 2 previous pages, print the left most page
-										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='ticket-management.php?page=" . $page - 2 . "'>" . $page - 2 . "</a></li>";
+										echo "<li class='page-item'><a class='page-link fs-4 px-3 text-dark' href='ticket-management.php?page=" . $page - 2 . "'>" . $page - 2 . "</a></li>";
 									}
 									
 									if ($page - 1 > 0) {
 										// if on page 2 or higher, print previous page
-										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='ticket-management.php?page=" . $page - 1 . "'>" . $page - 1 . "</a></li>";
+										echo "<li class='page-item'><a class='page-link fs-4 px-3 text-dark' href='ticket-management.php?page=" . $page - 1 . "'>" . $page - 1 . "</a></li>";
 									}
 
 									// print the active page
-									echo "<li class='page-item active fs-4 text-dark'><a class='page-link fs-4 text-light' href='ticket-management.php?page=" . $page . "'>" . $page . "</a></li>";
+									echo "<li class='page-item active fs-4 text-dark'><a class='page-link fs-4 px-3 text-light' href='ticket-management.php?page=" . $page . "'>" . $page . "</a></li>";
 
 									if (intval($_SESSION['excess']) > 0) {
 										// if there is next page (has excess), print the next page
-										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='ticket-management.php?page=" . $page + 1 . "'>" . $page + 1 . "</a></li>";
+										echo "<li class='page-item'><a class='page-link fs-4 px-3 text-dark' href='ticket-management.php?page=" . $page + 1 . "'>" . $page + 1 . "</a></li>";
 									}
 									
 
 									if ($page - 1 <= 0 && intval($_SESSION['excess']) > 10) {
 										// if in first page and there is 2 next pages, print the right most page
-										echo "<li class='page-item'><a class='page-link fs-4 text-dark' href='ticket-management.php?page=" . $page + 2 . "'>" . $page + 2 . "</a></li>";
+										echo "<li class='page-item'><a class='page-link fs-4 px-3 text-dark' href='ticket-management.php?page=" . $page + 2 . "'>" . $page + 2 . "</a></li>";
 									}
 
 									if (intval($_SESSION['excess']) == 0) {
 										// if in last page (no more excess), disable next button
-										echo "<li class='page-item'><a class='page-link fs-4 text-dark disabled' href='ticket-management.php?page=" . $page + 1 . "'>Next</a></li>";
+										echo "<li class='page-item'><a class='page-link fs-4 px-3 text-dark disabled' href='ticket-management.php?page=" . $page + 1 . "'>Next</a></li>";
 									}
 									else {
 										// else, enable next button

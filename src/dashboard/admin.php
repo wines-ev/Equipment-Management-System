@@ -2,26 +2,76 @@
 	include("../config.php");
 	require_once "../session-checker.php";
 
-    function get_count($table, $status, $link) {
+    function get_ticket_count_by_status($table, $status, $link) {
         $sql = "SELECT * FROM " . $table . " WHERE status = '" . $status . "'";
         if ($stmt = mysqli_prepare($link, $sql)) {
             if (mysqli_stmt_execute($stmt)) {
                 $result = mysqli_stmt_get_result($stmt);
                 return mysqli_num_rows($result);
             } else {
-                echo "Error inserting ticket";
+                echo "Error";
             }
         }
     }
 
-    function get_account_count($table, $user_type, $link) {
-        $sql = "SELECT * FROM " . $table . " WHERE user_type = '" . $user_type . "'";
+    function get_all_ticket_count($link) {
+        $sql = "SELECT * FROM ticket_tbl";
         if ($stmt = mysqli_prepare($link, $sql)) {
             if (mysqli_stmt_execute($stmt)) {
                 $result = mysqli_stmt_get_result($stmt);
                 return mysqli_num_rows($result);
             } else {
-                echo "Error inserting ticket";
+                echo "Error";
+            }
+        }
+    }
+
+    function get_all_equipment_count($link) {
+        $sql = "SELECT * FROM equipment_tbl";
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            if (mysqli_stmt_execute($stmt)) {
+                $result = mysqli_stmt_get_result($stmt);
+                return mysqli_num_rows($result);
+            } else {
+                echo "Error";
+            }
+        }
+    }
+
+    function get_all_user_count($link) {
+        $sql = "SELECT * FROM user_tbl";
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            if (mysqli_stmt_execute($stmt)) {
+                $result = mysqli_stmt_get_result($stmt);
+                return mysqli_num_rows($result);
+            } else {
+                echo "Error";
+            }
+        }
+    }
+
+
+    function get_monthly_open_ticket_count($month, $year , $link) {
+        $sql = "SELECT * FROM ticket_tbl WHERE MONTH(date_created) = " . $month . " AND YEAR(date_created) = " . $year;
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            if (mysqli_stmt_execute($stmt)) {
+                $result = mysqli_stmt_get_result($stmt);
+                return mysqli_num_rows($result);
+            } else {
+                echo "Error";
+            }
+        }
+    }
+
+    
+    function get_monthly_close_ticket_count($month, $year , $link) {
+        $sql = "SELECT * FROM ticket_tbl WHERE status = 'CLOSED' AND MONTH(date_created) = " . $month . " AND YEAR(date_created) = " . $year;
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            if (mysqli_stmt_execute($stmt)) {
+                $result = mysqli_stmt_get_result($stmt);
+                return mysqli_num_rows($result);
+            } else {
+                echo "Error";
             }
         }
     }
@@ -66,121 +116,59 @@
                 </div>
 
                 <div class="dashboard-grid-con">
-                    <div class="grid" style="overflow: hidden;">
-                        <div class="row gap-xxl-5 mx-5">
+                    <div class="grid">
+                        <div class="d-flex justify-content-between gap-5 mx-5 mb-5">
 
-                            <div class="col-12 col-lg-6 col-xxl-5 d-flex justify-content-around border py-5">
-                                <div class="card border-0 mx-4" style="width: 20rem; background-color: rgb(128,128,128, 0.2) ;">
-                                    <i class="fa-solid fa-users text-center py-5 text-dark" style="font-size: 10rem;"></i>
-                                    <div class="card-body bg-light p-0 pt-4" >
-                                        <h5 class="card-title fs-4">Accounts</h5>
-                                        <p class="card-text fs-5">
-                                            Track, organize, and manage your support tickets all in one place.
-                                        </p>
-                                        <a href="../account/account-management.php" class="btn btn-primary fs-5 mb-3">Manage accounts</a>
-                                    </div>
-                                </div>
+                            <div class="card shadow rounded-3 border-0 w-100">
                                 <div>
-                                    <canvas id="account-chart" style="width: 30rem;"></canvas>
+                                    <p class="fs-4 mb-0 px-3 py-4 rounded-top-3 text-light bg-blue"><?php echo get_all_ticket_count($link) ?> Tickets</p>
                                 </div>
 
-                                <script>
-                                    const account_chart = document.getElementById('account-chart');
-
-                                    const account_data = {
-                                        labels: [
-                                            'Administrator',
-                                            'Technical',
-                                            'Staff',
-                                            'User'
-                                        ],
-                                        datasets: [{
-                                            label: 'Accounts',
-                                            data: [
-                                                <?php echo get_account_count("user_tbl", "ADMINISTRATOR", $link); ?>, 
-                                                <?php echo get_account_count("user_tbl", "TECHNICAL", $link); ?>, 
-                                                <?php echo get_account_count("user_tbl", "STAFF", $link); ?>,
-                                                <?php echo get_account_count("user_tbl", "USER", $link); ?>
-                                            ],
-
-                                            backgroundColor: [
-                                            'rgb(255, 205, 86)',
-                                            'rgb(54, 162, 235)',
-                                            'rgb(255, 99, 132)',
-                                            'rgb(35, 233, 78)'
-                                            ],
-                                            hoverOffset: 4
-                                        }]
-                                    };
-
-                                    const account_config = {
-                                        type: 'doughnut',
-                                        data: account_data,
-                                    };
-
-                                    new Chart(account_chart, account_config);
-                                </script>
+                                <a href="#">
+                                    <div class="d-flex justify-content-between align-items-center text-dark p-3">
+                                        <p class="fs-5 mb-0">View details</p>
+                                        <i class="fa-solid fa-angle-right fs-5"></i>
+                                    </div>
+                                </a>
                             </div>
 
-                            <div class="col-12 col-lg-6 col-xxl-5 d-flex justify-content-around border py-5">
-                                <div class="card border-0 mx-4" style="width: 20rem; background-color: rgb(128,128,128, 0.2) ;">
-                                    <i class="fa-solid fa-computer text-center py-5 text-dark" style="font-size: 10rem;"></i>
-                                    <div class="card-body bg-light p-0 pt-4" >
-                                        <h5 class="card-title fs-4">Equipments</h5>
-                                        <p class="card-text fs-5">
-                                            Track, organize, and manage your support tickets all in one place.
-                                        </p>
-                                        <a href="../equipment/equipment-management.php" class="btn btn-primary fs-5 mb-3">Manage Equipments</a>
-                                    </div>
-                                </div>
+                            <div class="card shadow rounded-3 border-0 w-100">
                                 <div>
-                                    <canvas id="equipment-chart" style="width: 30rem;"></canvas>
+                                    <p class="fs-4 mb-0 px-3 py-4 rounded-top-3 text-light bg-success"><?php echo get_all_equipment_count($link) ?> Equipments</p>
                                 </div>
 
-                                <script>
-                                    const equipment_chart = document.getElementById('equipment-chart');
-
-                                    const equipment_data = {
-                                        labels: [
-                                            'On Repair',
-                                            'Working',
-                                            'Retired'
-                                        ],
-                                        datasets: [{
-                                            label: 'Equipments',
-                                            data: [
-                                                <?php echo get_count("equipment_tbl", "ON REPAIR", $link); ?>, 
-                                                <?php echo get_count("equipment_tbl", "WORKING", $link); ?>, 
-                                                <?php echo get_count("equipment_tbl", "RETIRED", $link); ?>,
-                                            ],
-
-                                            backgroundColor: [
-                                            'rgb(255, 205, 86)',
-                                            'rgb(54, 162, 235)',
-                                            'rgb(255, 99, 132)'
-                                            ],
-                                            hoverOffset: 4
-                                        }]
-                                    };
-
-                                    const equipment_config = {
-                                        type: 'doughnut',
-                                        data: equipment_data,
-                                    };
-
-                                    new Chart(equipment_chart, equipment_config);
-                                </script>
+                                <a href="#" class="d-flex justify-content-between text-dark p-3">
+                                    <p class="fs-5 mb-0">View details</p>
+                                    <i class="fa-solid fa-angle-right fs-5"></i>
+                                </a>
                             </div>
 
-                            <div class="col-12 col-lg-6 col-xxl-5 d-flex justify-content-around border py-5">
-                                <div class="card border-0 mx-4" style="width: 20rem; background-color: rgb(128,128,128, 0.2) ;">
-                                    <i class="fa-solid fa-ticket text-center py-5 text-dark" style="font-size: 10rem;"></i>
+                            <div class="card shadow rounded-3 border-0 w-100">
+                                <div>
+                                    <p class="fs-4 mb-0 px-3 py-4 rounded-top-3 text-light bg-danger"><?php echo get_all_user_count($link) ?> Users</p>
+                                </div>
+
+                                <a href="#" class="d-flex justify-content-between text-dark p-3">
+                                    <p class="fs-5 mb-0">View details</p>
+                                    <i class="fa-solid fa-angle-right fs-5"></i>
+                                </a>
+                            </div>
+
+                            
+
+                        </div>
+
+                        <div class="row shadow border-top mx-5 pt-5 pb-3 rounded-3 mb-5">
+
+                            <div class="col-12 col-lg-6 col-xxl-5 d-flex justify-content-start px-0">
+                                <div class="card border-0 mx-5" style="width: 20rem; background-color: rgb(128,128,128, 0.2) ;">
+                                    <i class="fa-solid fa-ticket text-center py-5 rounded-3 text-dark" style="font-size: 10rem;"></i>
                                     <div class="card-body bg-light p-0 pt-4" >
                                         <h5 class="card-title fs-4">Tickets</h5>
                                         <p class="card-text fs-5">
                                             Track, organize, and manage your support tickets all in one place.
                                         </p>
-                                        <a href="../ticket-admin/ticket-management.php" class="btn btn-primary fs-5 mb-3">Manage tickets</a>
+                                        <a href="../ticket-admin/ticket-management.php" class="btn bg-blue text-light fs-5 mb-3 px-3 mt-xxl-3">Manage tickets</a>
                                     </div>
                                 </div>
                                 <div>
@@ -188,28 +176,31 @@
                                 </div>
 
                                 <script>
-                                    const ctx = document.getElementById('ticket-chart');
+                                    const ticket_chart = document.getElementById('ticket-chart');
 
                                     const ticket_data = {
                                         labels: [
                                             'Pending',
-                                            'Approved',
+                                            'On-Going',
+                                            'For Approval',
                                             'Closed'
                                         ],
                                         datasets: [{
                                             label: 'Tickets',
                                             data: [
-                                                <?php echo get_count("ticket_tbl", "PENDING", $link); ?>, 
-                                                <?php echo get_count("ticket_tbl", "APPROVED", $link); ?>, 
-                                                <?php echo get_count("ticket_tbl", "CLOSED", $link); ?>,
+                                                <?php echo get_ticket_count_by_status("ticket_tbl", "PENDING", $link); ?>, 
+                                                <?php echo get_ticket_count_by_status("ticket_tbl", "ON-GOING", $link); ?>, 
+                                                <?php echo get_ticket_count_by_status("ticket_tbl", "FOR APPROVAL", $link); ?>, 
+                                                <?php echo get_ticket_count_by_status("ticket_tbl", "CLOSED", $link); ?>,
                                             ],
 
                                             backgroundColor: [
                                             'rgb(255, 205, 86)',
                                             'rgb(54, 162, 235)',
+                                            'rgb(61, 209, 118)',
                                             'rgb(255, 99, 132)'
                                             ],
-                                            hoverOffset: 4
+                                            hoverOffset: 12
                                         }]
                                     };
 
@@ -218,9 +209,148 @@
                                         data: ticket_data,
                                     };
 
-                                    new Chart(ctx, ticket_config);
+                                    new Chart(ticket_chart, ticket_config);
+                                </script>
+
+                               
+                            </div>
+
+                            <div class="col-12 col-lg-6 col-xxl-7 d-flex justify-content-center px-0">
+                                <div>
+                                    <div>
+                                        <p class="fs-4 mb-4 pb-2 fw-bold">Monthly Ticket Accomplishment</p>
+                                    </div>
+                                    <canvas id="ticket-line-chart"></canvas>
+                                    
+
+                                </div>
+
+                                <script>
+                                    const ctx = document.getElementById('ticket-line-chart');
+
+                                    let months = [];
+                                    let monthly_open_count = [];
+                                    let monthly_close_count = [];
+
+                                    <?php
+                                        $month = date('m');
+                                        $year = date('Y');
+                                        
+                                        for ($i = 0; $i <= 5; $i++) {
+                                            $dateObj   = DateTime::createFromFormat('!m', $month);
+                                            $monthName = $dateObj->format('F');
+                                            echo "months.unshift('" . $monthName . "');";
+                                            
+                                            echo "monthly_open_count.unshift(" . get_monthly_open_ticket_count($month, $year, $link) . ");";
+                                            echo "monthly_close_count.unshift(" . get_monthly_close_ticket_count($month, $year, $link) . ");";
+
+                                            $month = sprintf('%02d', $month - 1);
+
+                                            if ($month == "00") {
+                                                $month = 12;
+                                                $year = sprintf('%4d', $year - 1);
+                                            }
+                                        }
+
+
+                                        
+
+                                    ?>
+
+                                    
+                                    
+                                    const ticket_line_data = {
+                                        labels: months,
+                                        datasets: [
+                                            {
+                                                label: 'Opened',
+                                                data: monthly_open_count,
+
+                                                fill: false,
+                                                borderColor: 'rgb(48, 131, 183)',
+                                                backgroundColor: 'white',
+                                                tension: 0.1
+                                            },
+                                            {
+                                                label: 'Closed',
+                                                data: monthly_close_count,
+
+                                                fill: false,
+                                                borderColor: 'rgb(216, 69, 69)',
+                                                backgroundColor: 'white',
+                                                tension: 0.1
+                                            }   
+                                        ]
+                                    };
+
+                                    const ticket_line_config = {
+                                        type: 'line',
+                                        data: ticket_line_data,
+                                    };
+
+                                    new Chart(ctx, ticket_line_config);
                                 </script>
                             </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mx-5 mb-4">
+                            <p class="fs-4 mb-0">Recent tickets</p>
+                        </div>
+                        
+                        <div class="accout-table-con pb-5 mx-5 fs-5">
+                        <?php
+
+
+
+                            $sql = "SELECT * FROM ticket_tbl ORDER BY date_created DESC LIMIT 5";
+
+                            if($stmt = mysqli_prepare($link, $sql)) {
+                                if (mysqli_stmt_execute($stmt)) {
+                                    $result = mysqli_stmt_get_result($stmt);
+                                    buildtable($result);
+                                }
+                            }
+                            
+
+                            function buildtable($result) {
+                                if(mysqli_num_rows($result) > 0) {
+                                    echo "<table id='account-table' class='shadow'>";
+                                    
+                                    echo "<thead><tr>";
+                                    echo "
+                                    <th class='fs-4'>Ticket Number</th>
+                                    <th class='fs-4'>Problem</th>
+                                    <th class='fs-4'>Date</th>
+                                    <th class='fs-4'>Time</th>
+                                    <th class='fs-4'>Status</th>";
+                                    
+                                    echo "</tr></thead>";
+
+                                    while($row = mysqli_fetch_array($result)) {
+                                        $_SESSION['count'] = intval($_SESSION['count']) + 1;
+                                        echo "<tr class='data-row' >";
+                                        echo "<td id='ticket-number' class='fs-5'>" . $row['ticket_number'] . "</td>";
+                                        echo "<td class='fs-5'>" . $row['problem'] . "</td>";
+
+                                        $date =  explode(' ', $row['date_created']);
+                                        echo "<td class='fs-5'>" . $date[0] . "</td>";
+
+                                        $time =  date('h:i:s a', strtotime($date[1]));
+                                        echo "<td class='fs-5'>" . $time . "</td>";
+
+
+
+                                        echo "<td id='status' class='fs-5'>" . $row['status'] . "</td>";
+                                        echo "</tr>";
+                                        
+                                    }
+                                    echo "</table>";
+                                }
+                                else {
+                                    echo "<p class='fs-4'>No rercord/s found.</p>";
+                                }
+                            }
+                        ?>
 
                         </div>
                     </div>
@@ -239,4 +369,13 @@
     </div>
 </body>
 <script src="../../js/script.js"></script>
+<script>
+    const rows = document.getElementById("account-table").childNodes[1].childNodes;
+	
+	for (var i = 0; i < rows.length; i++) {
+		if (i%2 == 0) {
+			rows[i].classList.add("bg-blue-50");
+		}
+	}
+</script>
 </html>

@@ -17,6 +17,7 @@ html {
 
 body {
     background-color: whitesmoke !important;
+    overflow: hidden !important;
 }
 
 a {
@@ -124,8 +125,13 @@ a {
     width: 100%;
 }
 
+.pagination .active>.page-link {
+    background-color: #145180 !important;
+    border-color: #145180 !important;
+}
+
 .accout-table-con table th {
-    background-color: #6c757d;
+    background-color: #145180;
     color: #fff;
 }
 
@@ -140,8 +146,7 @@ a {
 
 
 .dashboard-grid-con {
-    overflow-y: auto;
-    height: 59.5rem;
+    overflow: auto;
 }
 
 .dashboard-grid-con::-webkit-scrollbar {
@@ -213,6 +218,10 @@ select {
     background-color: #0884e326 !important;
 }
 
+.bg-dark-blue {
+    background-color: #145180 !important;
+}
+
 .bg-cyan {
     background-color: #06CEC8 !important;
 }
@@ -262,6 +271,14 @@ select {
     .login-con, .img-con {
         height: 72vh;
     }
+
+    #ticket-line-chart {
+        width: 50rem;
+    }
+
+    .dashboard-grid-con {
+        height: 62.3rem;
+    }
     
 }
 
@@ -274,12 +291,29 @@ select {
     .login-con, .img-con {
         height: 65vh;
     }
+
+    #ticket-line-chart {
+        width: 48rem;
+    }
+
+    .dashboard-grid-con {
+        height: 66rem;
+    }
+
 }
 
 @media screen and (min-width: 1400px) {
     .login-con, .img-con {
         height: 73vh;
     }
+    #ticket-line-chart {
+        width: 50rem;
+    }
+
+    .dashboard-grid-con {
+        height: 59rem;
+    }
+
 }
 
 @media screen and (min-width: 1920px) {
