@@ -55,21 +55,8 @@
                 </div>
 
 
-
-                <?php
-                    if ($_SESSION['user_type'] == "ADMINISTRATOR") {
-                        $ticket_path = "../ticket-admin/";
-                    } 
-                    else if ($_SESSION['user_type'] == "TECHNICAL") {
-                        $ticket_path = "../ticket-tech/";
-                    }
-                    else {
-                        $ticket_path = "../ticket/";
-                    }
-                ?>
-
                 <div class="d-flex align-items-center mt-4">
-                    <a class="d-flex align-items-center" href="<?php echo $ticket_path ?>ticket-management.php">
+                    <a class="d-flex align-items-center" href="../ticket/ticket-management.php">
                         <i class="icon fa-solid fa-ticket fs-2 text-light text-center" style="width: 5rem;"></i>
                         <p class="navtab-text text-light fs-4 mb-0" style="width: 9rem;">Tickets</p>
                     </a>

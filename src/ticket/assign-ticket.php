@@ -116,9 +116,9 @@
 								<select class="form-select fs-4" name="cmb_tech" id="cmb_tech" required>
 									<option value="">Select technician</option>
                                     <?php
-                                        if(mysqli_num_rows($result)) {
+                                        if(mysqli_num_rows($result) > 0) {
                                             while ($row = mysqli_fetch_array($result)) {
-                                                echo "<option value = '" . $row['username'] . "'>" . $row['username'] . "</option>" ;
+                                                echo "<option value = '" . $row['username'] . "'" . ($ticket['assigned_to'] == $row['username'] ?  "selected" : "") . ">" . $row['username'] . "</option>" ;
                                             }
                                         }
                                         else {
