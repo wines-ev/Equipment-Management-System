@@ -8,12 +8,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Accounts Management Page - AU Technical Support Management System</title>
+	<title>Account Management</title>
 	
 	<link rel="stylesheet" href="../../plugins/bs/bootstrap.min.css">
 	<script src="../../plugins/bs/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/acb62c1ffe.js" crossorigin="anonymous"></script>
-
+ 
 	<link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
@@ -62,7 +62,7 @@
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary fs-4 px-4" data-bs-dismiss="modal">OK</button>
+					<button class="btn btn-primary fs-4 px-4" id="btn-ok" data-bs-dismiss="modal">OK</button>
 				</div>
 			</div>
 		</div>
@@ -84,8 +84,8 @@
 					<p class="fs-4">This action cannot be undone.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary fs-4" data-bs-dismiss="modal">Cancel</button>
-					<button class="btn btn-danger fs-4" onclick="delete_user()">Yes</a>
+					<button type="button" class="btn btn-secondary fs-4 px-4" id="btn-cancel"  data-bs-dismiss="modal">Cancel</button>
+					<button class="btn btn-danger fs-4 px-5" id="btn-delete" onclick="delete_user()">Yes</a>
 				</div>
 			</div>
 		</div>
@@ -93,15 +93,18 @@
 
 	<?php
 		if (isset($_SESSION["account-created"])) {
+			echo "<script>document.getElementById('btn-ok').style.display = 'block';</script>";
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
 			unset($_SESSION["account-created"]);
 		}
 
 		else if (isset($_SESSION["account-updated"])) {
+			echo "<script>document.getElementById('btn-ok').style.display = 'block';</script>";
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
 			unset($_SESSION["account-updated"]);
 		}	
 		else if (isset($_SESSION["account-deleted"])) {
+			echo "<script>document.getElementById('btn-ok').style.display = 'block';</script>";
 			echo "<script>document.getElementById('pop-up-trigger').click();</script>";
 			unset($_SESSION["account-deleted"]);
 		}	
@@ -180,7 +183,7 @@
 									
 									echo "<thead><tr>";
 									echo "
-									<th class='fs-4'>Username</th>
+									<th class='fs-4'>Username</th>	
 									<th class='fs-4'>Usertype</th>
 									<th class='fs-4'>Status</th>
 									<th class='fs-4'>Created By</th>
@@ -286,8 +289,6 @@
 						</div>
 					</nav>
 				</div>
-
-				
 			</div>
 		</div>		
 	</div>
@@ -300,6 +301,8 @@
 	
 	for (let btn of caution_triggers) {
 		btn.addEventListener('click', () => {
+			document.getElementById('btn-cancel').style.display = "block";
+			document.getElementById('btn-delete').style.display = "block";
 			document.getElementById('username-to-delete-placeholder').innerHTML = btn.parentNode.parentNode.childNodes[0].innerHTML
 			document.getElementById('caution-pop-up-trigger').click();
 		});

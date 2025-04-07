@@ -1,7 +1,7 @@
 <?php	
 	include("../config.php");
 	require_once "../session-checker.php";
-
+    
     function get_count($table, $status, $link) {
         $sql = "SELECT * FROM " . $table . " WHERE status = '" . $status . "'";
         if ($stmt = mysqli_prepare($link, $sql)) {
@@ -14,8 +14,8 @@
         }
     }
 
-    function get_account_count($table, $user_type, $link) {
-        $sql = "SELECT * FROM " . $table . " WHERE user_type = '" . $user_type . "'";
+    function get_ticket_count($table, $status, $link) {
+        $sql = "SELECT * FROM " . $table . " WHERE status = '" . $status . "' AND assigned_to = '" . $_SESSION['username'] ."'";
         if ($stmt = mysqli_prepare($link, $sql)) {
             if (mysqli_stmt_execute($stmt)) {
                 $result = mysqli_stmt_get_result($stmt);
@@ -46,6 +46,7 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
+    <?php include ("../../modules/login-toast.php") ?>
     <div class="container-fluid mx-0 px-0">
         <div class="accounts-hero d-flex align-items-start">
             <?php include ("../../modules/sidenav.php") ?>
@@ -67,15 +68,15 @@
 
                 <div class="dashboard-grid-con">
                     <div class="grid" style="overflow: hidden;">
-                        <div class="row gap-xxl-5 mx-5">
+                        <div class="d-flex gap-xxl-5 mx-5">
 
-                            <div class="col-12 col-lg-6 col-xxl-5 d-flex justify-content-around border py-5">
+                            <div class="flex-fill d-flex justify-content-around border py-5">
                                 <div class="card border-0 mx-4" style="width: 20rem; background-color: rgb(128,128,128, 0.2) ;">
                                     <i class="fa-solid fa-computer text-center py-5 text-dark" style="font-size: 10rem;"></i>
                                     <div class="card-body bg-light p-0 pt-4" >
                                         <h5 class="card-title fs-4">Equipments</h5>
                                         <p class="card-text fs-5">
-                                            Track, organize, and manage your support tickets all in one place.
+                                            Track, organize, and manage your equipments all in one place.
                                         </p>
                                         <a href="../equipment/equipment-management.php" class="btn btn-primary fs-5 mb-3">Manage Equipments</a>
                                     </div>
@@ -119,7 +120,7 @@
                                 </script>
                             </div>
 
-                            <div class="col-12 col-lg-6 col-xxl-5 d-flex justify-content-around border py-5">
+                            <div class="flex-fill d-flex justify-content-around border py-5">
                                 <div class="card border-0 mx-4" style="width: 20rem; background-color: rgb(128,128,128, 0.2) ;">
                                     <i class="fa-solid fa-ticket text-center py-5 text-dark" style="font-size: 10rem;"></i>
                                     <div class="card-body bg-light p-0 pt-4" >
@@ -127,7 +128,7 @@
                                         <p class="card-text fs-5">
                                             Track, organize, and manage your support tickets all in one place.
                                         </p>
-                                        <a href="../ticket-admin/ticket-management.php" class="btn btn-primary fs-5 mb-3">Manage tickets</a>
+                                        <a href="../ticket/ticket-management.php" class="btn btn-primary fs-5 mb-3">Manage tickets</a>
                                     </div>
                                 </div>
                                 <div>
@@ -140,21 +141,27 @@
                                     const ticket_data = {
                                         labels: [
                                             'Pending',
+                                            'On-going',
+                                            'For approval',
                                             'Approved',
                                             'Closed'
                                         ],
                                         datasets: [{
                                             label: 'Tickets',
                                             data: [
-                                                <?php echo get_count("ticket_tbl", "PENDING", $link); ?>, 
-                                                <?php echo get_count("ticket_tbl", "APPROVED", $link); ?>, 
-                                                <?php echo get_count("ticket_tbl", "CLOSED", $link); ?>,
+                                                <?php echo get_ticket_count("ticket_tbl", "PENDING", $link); ?>, 
+                                                <?php echo get_ticket_count("ticket_tbl", "ON-GOING", $link); ?>, 
+                                                <?php echo get_ticket_count("ticket_tbl", "FOR APPOVAL", $link); ?>, 
+                                                <?php echo get_ticket_count("ticket_tbl", "APPROVED", $link); ?>, 
+                                                <?php echo get_ticket_count("ticket_tbl", "CLOSED", $link); ?>,
                                             ],
 
                                             backgroundColor: [
                                             'rgb(255, 205, 86)',
                                             'rgb(54, 162, 235)',
-                                            'rgb(255, 99, 132)'
+                                            'rgb(255, 99, 132)',
+                                            'rgb(193, 140, 41)',
+                                            'rgb(98, 36, 110)'
                                             ],
                                             hoverOffset: 4
                                         }]
@@ -172,6 +179,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="mx-5 flex-fill position-relative">
+                    <p id="footer-text" class="fs-5">Copyright 2025, Evander Villareal Wines</p>
+                </div>
 
                 
 
@@ -186,4 +196,10 @@
     </div>
 </body>
 <script src="../../js/script.js"></script>
+<?php
+	if (isset($_SESSION["just_logged_in"])) {
+		echo "<script>document.getElementById('liveToastBtn').click();</script>";
+	}
+    unset($_SESSION["just_logged_in"]);
+?>
 </html>

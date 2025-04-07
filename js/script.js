@@ -1,14 +1,16 @@
 
 const open_nav_icon = document.getElementById("open-nav-icon");
 const close_nav_icon = document.getElementById("close-nav-icon");
-const sidenav_title = document.getElementById("sidenav_title");
+const au_logo = document.getElementById("au_logo");
 const navtab_texts = document.getElementsByClassName("navtab-text");
 
 function openNav() {
     document.getElementById("sidenav").style.width = "20rem";
+
+    au_logo.style.width = "10rem";
+    au_logo.style.height = "10rem";
     open_nav_icon.style.display = "none";
     close_nav_icon.style.display = "block";
-    sidenav_title.style.display = "block";		
 
     document.getElementById("sidenav").style.padding = "0 2rem";
 
@@ -57,10 +59,10 @@ function closeNav() {
 
 
 
-    
+    au_logo.style.width = "4rem";
+    au_logo.style.height = "4rem";
     open_nav_icon.style.display = "block";
     close_nav_icon.style.display = "none";
-    sidenav_title.style.display = "none";
 
     for(let text of navtab_texts) {
         text.style.display = "none";
@@ -69,3 +71,12 @@ function closeNav() {
 
 
 
+const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
+
+if (toastTrigger) {
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastTrigger.addEventListener('click', () => {
+    toastBootstrap.show()
+  })
+}

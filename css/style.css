@@ -113,6 +113,13 @@ a {
 
 .accounts-con {
     flex: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#account-table {
+    border-collapse: collapse;
 }
 
 
@@ -166,7 +173,16 @@ a {
     display: none;
 }
 
+#close-nav-icon {
+    position: absolute;
+    right: 0;
+    top: 1.25rem;
+}
 
+#footer-text {
+    position: absolute;
+    bottom: 0;
+}
 
 
 
@@ -278,8 +294,8 @@ select {
         height: 72vh;
     }
 
-    #ticket-line-chart {
-        width: 50rem;
+    #ticket-chart, #equipment-chart {
+        width: 30rem;
     }
 
     .dashboard-grid-con {
@@ -297,8 +313,8 @@ select {
         height: 65vh;
     }
 
-    #ticket-line-chart {
-        width: 48rem;
+    #ticket-chart, #equipment-chart {
+        width: 28rem !important;
     }
 
     .dashboard-grid-con {
@@ -311,13 +327,14 @@ select {
     .login-con, .img-con {
         height: 73vh;
     }
-    #ticket-line-chart {
-        width: 50rem;
+    #ticket-chart, #equipment-chart {
+        width: 28.5rem !important;
     }
 
     .dashboard-grid-con {
-        height: 59rem;
+        height: 59rem !important;
     }
+    
 
 }
 

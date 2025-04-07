@@ -187,8 +187,11 @@
 									<th class='fs-4'>Type</th>
 									<th class='fs-4'>Branch</th>
 									<th class='fs-4'>Status</th>
-									<th class='fs-4'>Created by</th>
-									<th class='fs-4'>Action</th>";
+									<th class='fs-4'>Created by</th>";
+									if ($_SESSION["user_type"] != "USER") {
+										echo "<th class='fs-4'>Action</th>";
+									}
+									
 									
 									echo "</tr></thead>";
 						
@@ -203,14 +206,20 @@
 											echo "<td class='fs-5'>" . $row['type'] . "</td>";
 											echo "<td class='fs-5'>" . $row['branch'] . "</td>";
 											echo "<td class='fs-5'>" . $row['status'] . "</td>";
-											echo "<td class='fs-5'>" . $row['created_by'] . "</td>";
-											echo "<td>";
-											echo "<a href='update-equipment.php?asset_number=" . urlencode($row['asset_number']) . "' class='btn bg-blue text-light fs-5 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
-											echo "
-												<button id='caution-modal-btn' class='btn btn-danger text-light fs-5'>
-													<i class='fa-solid fa-trash-can'></i>
-												</button>";
-											echo "</td>";	
+											
+											if ($_SESSION["user_type"] != "USER") {
+												echo "<td class='fs-5'>" . $row['created_by'] . "</td>";
+												echo "<td>";
+												echo "<a href='update-equipment.php?asset_number=" . urlencode($row['asset_number']) . "' class='btn bg-blue text-light fs-5 me-2'><i class='fa-solid fa-pen-to-square'></i></a> ";
+												echo "
+													<button id='caution-modal-btn' class='btn btn-danger text-light fs-5'>
+														<i class='fa-solid fa-trash-can'></i>
+													</button>";
+												echo "</td>";	
+											}
+											else {
+												echo "<td class='fs-5' style='padding: 14.5px 0'>" . $row['created_by'] . "</td>";
+											}
 											echo "</tr>";
 										}
 										else {
@@ -299,7 +308,6 @@
 						</div>
 					</nav>
 				</div>
-
 				
 			</div>
 		</div>		
@@ -316,11 +324,12 @@
 	const data_row = Array.from(document.getElementsByClassName("data-row"));
 
 	data_row.forEach(element => {
-		element.querySelector('#caution-modal-btn').addEventListener('click', () => {
-			document.getElementById('asset-to-delete-placeholder').innerHTML = element.querySelector('#asset-number').innerHTML;
-			document.getElementById('caution-pop-up-trigger').click();
-		
-		});
+		if (element.querySelector('#caution-modal-btn')) {
+			element.querySelector('#caution-modal-btn').addEventListener('click', () => {
+				document.getElementById('asset-to-delete-placeholder').innerHTML = element.querySelector('#asset-number').innerHTML;
+				document.getElementById('caution-pop-up-trigger').click();
+			});
+		}
 	});
 
 	function delete_user() {

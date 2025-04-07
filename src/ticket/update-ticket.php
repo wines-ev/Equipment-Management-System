@@ -3,14 +3,9 @@
 	include "../session-checker.php";
 
 	if (isset($_POST["btnsubmit"])) {
-		
-    
-        if ($_SESSION["current_problem"] == $_POST["cmb_problem"] ) {
-            $sql = "UPDATE ticket_tbl SET problem = ?, details = COALESCE(NULLIF(?, ''), details)  WHERE ticket_number = ?";
-        }
-        else {
-            $sql = "UPDATE ticket_tbl SET problem = ?, details = ? WHERE ticket_number = ?";
-        }
+
+        $sql = "UPDATE ticket_tbl SET problem = ?, details = ? WHERE ticket_number = ?";
+        
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "sss", $_POST['cmb_problem'], $_POST['txt_details'], $_GET['ticket_number']);
@@ -168,7 +163,7 @@
 	
 	<div class="container-fluid mx-0 px-0">
 		<div class="accounts-hero d-flex align-items-start">
-			<?php include ("../../modules/user_sidenav.php") ?>
+			<?php include ("../../modules/sidenav.php") ?>
 			
 			<div class="accounts-con">
 				<?php include ("../../modules/header.php") ?>
@@ -214,8 +209,6 @@
 					</div>
 
 				</div>
-
-				
 			</div>
 		</div>
 	</div>

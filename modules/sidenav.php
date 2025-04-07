@@ -2,10 +2,9 @@
     <div id="sidenav" class="sidenav position-relative bg-blue z-1 overflow-hidden">
         <div class="d-flex flex-column justify-content-between h-100 pb-5">
             <div class="d-flex flex-column gap-4">
-                <div id="sidenav-header" class="d-flex align-items-center justify-content-between w-100 mb-5">
-                    <div class="d-flex align-items-center" style="height: 6rem;">
-                        <img class="au_logo" src="../../assets/img/au_logo.png" alt="" style="width: 4rem; height: 4rem;">
-                        <p id="sidenav_title" class="fs-2 ms-3 mb-0 text-light">TSMS</p>
+                <div id="sidenav-header" class="position-relative w-100 mb-5">
+                    <div class="d-flex justify-content-center" style="margin-top: 5rem;">
+                        <img class="au_logo" id="au_logo" src="../../assets/img/au_logo.png" alt="" style="width: 10rem; height: 10rem;">
                     </div>
                     <span id="close-nav-icon" class="text-light fs-2" style="cursor:pointer" onclick="closeNav()">&#9776;</span>
                 </div>
@@ -46,6 +45,8 @@
 
                 ?>
 
+
+    
 
                 <div class="d-flex align-items-center mt-4">
                     <a class="d-flex align-items-center" href="../equipment/equipment-management.php">

@@ -11,10 +11,26 @@
             mysqli_stmt_bind_param($stmt, "sss", $_POST['cmb_tech'], $date, $_GET['ticket_number']);
 
             if (mysqli_stmt_execute($stmt)) {
-                $sql = "INSERT INTO logs_tbl (datelog, timelog, action, module, performedto, performedby) VALUE(?, ?, ?, ?, ?, ?)";
-                $_SESSION["ticket-assigned"] = $_GET['ticket_number'];
-                header("location: ticket-management.php");
-                exit();
+				$sql = "INSERT INTO logs_tbl (datelog, timelog, action, module, performedto, performedby) VALUE(?, ?, ?, ?, ?, ?)";
+				if ($stmt = mysqli_prepare($link, $sql)) {
+					$date = date("d/m/Y");
+					$time = date("h:i:sa");
+					$action = "assign";
+					$module = "ticket-management";
+					$performed_to = "Ticket #" . $_GET['ticket_number'];
+					mysqli_stmt_bind_param($stmt, "ssssss", $date, $time, $action, $module, $performed_to, $_SESSION['username']);
+
+
+					if (mysqli_stmt_execute($stmt)) {
+						$_SESSION["ticket-assigned"] = $_GET['ticket_number'];
+						header("location: ticket-management.php");
+						exit();
+					}
+				}
+				else {
+					echo "<font color='red'>Error on inserting logs.</font>";
+				}
+                
             }
         }
         else {
@@ -138,8 +154,6 @@
 					</div>
 
 				</div>
-
-				
 			</div>
 		</div>
 	</div>

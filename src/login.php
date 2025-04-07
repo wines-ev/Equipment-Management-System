@@ -18,6 +18,7 @@ if (isset($_POST['btnlogin'])) {
 
 				$_SESSION['username'] = $account['username'];
 				$_SESSION['user_type'] = $account['user_type'];
+				$_SESSION['just_logged_in'] = true;
 				
 				if ($account['user_type'] == "USER") {
 					header("location: dashboard/user.php");
